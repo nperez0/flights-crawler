@@ -1,5 +1,8 @@
 ﻿using Flights.Data.Models.Query;
+using Flights.Data.Models.Response;
+using Flights.Data.Models.Result;
 using Microsoft.Extensions.Options;
+using System;
 using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
@@ -35,13 +38,30 @@ public class TelegramBroadcaster(IOptions<TelegramOptions> options) : IBroadcast
     private static string BuildMultiCityMessage(BestPrice bestPrice)
     {
         var message = new StringBuilder();
+        var segmentMessages = BuildSegmentMessages(bestPrice);
 
-        message.AppendJoin(Environment.NewLine, bestPrice.Query.Segments.Select(BuildSegmentMessage));
+        message.AppendJoin(Environment.NewLine, segmentMessages);
         message.AppendLine($"{bestPrice.Price:F2}");
 
         return message.ToString();
     }
 
-    private static string BuildSegmentMessage(FlightQuerySegment segment)
-        => $"{segment.Origin.Code} -> {segment.Destination.Code} - {segment.Date:yyyy-MM-dd}";
+    private static IEnumerable<string> BuildSegmentMessages(BestPrice bestPrice)
+    {
+        var slices = bestPrice.BestResult.Solutions.First().Slices;
+
+        return bestPrice.Query.Segments
+            .Select(BuildSegmentMessage(bestPrice.BestResult, slices));
+    }
+
+    private static Func<FlightQuerySegment, int, string> BuildSegmentMessage(FlightQueryResult result, FlightSlice[] slices)
+        => (segment, index) => BuildSegmentMessage(segment, result, slices[index].DurationMinutes);
+
+    private static string BuildSegmentMessage(FlightQuerySegment segment, FlightQueryResult result, int durationMinutes)
+    {
+        var duration = TimeSpan.FromMinutes(durationMinutes);
+        var formattedDuration = $"{(int)duration.TotalHours:00}h {duration.Minutes:00}m";
+
+        return $"{segment.Origin.Code} -> {segment.Destination.Code} - {segment.Date:yyyy-MM-dd} ({formattedDuration})";
+    }
 }

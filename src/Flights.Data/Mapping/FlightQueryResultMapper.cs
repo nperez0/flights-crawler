@@ -13,7 +13,7 @@ public static class FlightQueryResultMapper
         var solutions = response.SolutionList?.Solutions?
             .Take(TopSolutionCount)
             .Select(MapSolution)
-            .ToList() ?? [];
+            .ToArray() ?? [];
 
         return new FlightQueryResult
         {
@@ -29,7 +29,7 @@ public static class FlightQueryResultMapper
     {
         var slices = solution.Itinerary?.Slices?
             .Select(MapSlice)
-            .ToList() ?? [];
+            .ToArray() ?? [];
 
         return new FlightSolution
         {

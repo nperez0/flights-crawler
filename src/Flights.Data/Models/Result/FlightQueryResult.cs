@@ -8,7 +8,7 @@ public class FlightQueryResult
 
     public required Guid QueryId { get; set; }
 
-    public required List<FlightSolution> Solutions { get; set; }
+    public required FlightSolution[] Solutions { get; set; }
 
     public int TotalSolutionCount { get; set; }
 
