@@ -60,6 +60,8 @@ public static class MongoDbMappings
         BsonClassMap.RegisterClassMap<Models.Query.Location>(cm =>
         {
             cm.AutoMap();
+            cm.MapProperty(x => x.Code)
+                .SetElementName("code");
             cm.MapProperty(x => x.City)
                 .SetElementName("city");
             cm.MapProperty(x => x.Country)
