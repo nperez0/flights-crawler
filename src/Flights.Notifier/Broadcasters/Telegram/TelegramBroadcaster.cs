@@ -10,35 +10,34 @@ public class TelegramBroadcaster(IOptions<TelegramOptions> options) : IBroadcast
 {
     private readonly TelegramOptions telegramOptions = options.Value;
 
-    public async Task BroadcastAsync(BestPrice bestPrice)
+    public async Task BroadcastAsync(BestPrice[] bestPrices)
     {
         var bot = new TelegramBotClient(telegramOptions.BotToken);
 
-        await bot.SendMessage(
-            chatId: telegramOptions.ChatId,
-            text: BuildMessage(bestPrice),
-            parseMode: ParseMode.None,
-            cancellationToken: CancellationToken.None
-        );
+        foreach (var bestPrice in bestPrices)
+        {
+            await bot.SendMessage(
+                chatId: telegramOptions.ChatId,
+                text: BuildMessage(bestPrice),
+                parseMode: ParseMode.None,
+                cancellationToken: CancellationToken.None
+            );
+        }
     }
 
     private string BuildMessage(BestPrice bestPrice)
-    {
-        switch (bestPrice.Query.Type)
+        => bestPrice.Query.Type switch
         {
-            case FlightQueryType.MultiCity:
-                return BuildMultiCityMessage(bestPrice);
-            default:
-                return string.Empty;
-        }
-    }
+            FlightQueryType.MultiCity => BuildMultiCityMessage(bestPrice),
+            _ => string.Empty,
+        };
 
     private static string BuildMultiCityMessage(BestPrice bestPrice)
     {
         var message = new StringBuilder();
 
         message.AppendJoin(Environment.NewLine, bestPrice.Query.Segments.Select(BuildSegmentMessage));
-        message.AppendLine(bestPrice.Price);
+        message.AppendLine($"{bestPrice.Price:F2}");
 
         return message.ToString();
     }

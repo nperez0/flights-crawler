@@ -4,7 +4,7 @@ using Flights.Data.Models.Result;
 
 namespace Flights.Notifier;
 
-public class NotificationsContext(FlightQuery[] queries, FlightQueryResult[] results, FlightQueryNotification[] notifications)
+public class BestPriceContext(FlightQuery[] queries, FlightQueryResult[] results, FlightQueryNotification[] notifications)
 {
     public FlightQuery[] Queries { get; } = queries;
 

@@ -18,23 +18,23 @@ public class FlightsNotifier(
         var queryIds = queries.Select(q => q.Id).ToArray();
         var results = await flightQueryResultRepository.GetByQueryIdsAsync(queryIds);
         var notifications = await flightQueryNotificationRepository.GetByQueryIdsAsync(queryIds);
-        var context = new NotificationsContext(queries, results, notifications);
+        var context = new BestPriceContext(queries, results, notifications);
 
-        LowerPriceCalculator.CalculateLowerPrices(context);
+        BestPriceDetector.Evaluate(context);
 
         await Broadcast(context);
         await PersistNotifications(context);
     }
 
-    private Task Broadcast(NotificationsContext context)
+    private Task Broadcast(BestPriceContext context)
     {
         var tasks = broadcasters
-            .SelectMany(b => context.BestPrices.Select(b.BroadcastAsync));
+            .Select(b => b.BroadcastAsync([.. context.BestPrices]));
 
         return Task.WhenAll(tasks);
     }
 
-    private Task PersistNotifications(NotificationsContext context)
+    private Task PersistNotifications(BestPriceContext context)
     {
         var saveTasks = context.BestPrices
             .Select(x => new FlightQueryNotification

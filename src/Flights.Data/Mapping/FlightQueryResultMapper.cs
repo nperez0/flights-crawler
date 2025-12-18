@@ -1,4 +1,3 @@
-using Flights.Data.Models.Query;
 using Flights.Data.Models.Response;
 using Flights.Data.Models.Result;
 using Location = Flights.Data.Models.Result.Location;
@@ -35,7 +34,7 @@ public static class FlightQueryResultMapper
         return new FlightSolution
         {
             Id = solution.Id ?? string.Empty,
-            Price = solution.DisplayTotal ?? "0",
+            Price = ParsePrice(solution.DisplayTotal),
             PassengerCount = solution.PassengerCount,
             Slices = slices
         };
@@ -70,5 +69,21 @@ public static class FlightQueryResultMapper
             FlightNumbers = slice.Flights ?? [],
             Cabins = slice.Cabins ?? []
         };
+    }
+
+    public static decimal ParsePrice(string? price)
+    {
+        if (price.IsNullOrWhiteSpace())
+            return 0;
+
+        if (decimal.TryParse(price, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var value))
+            return value;
+
+        var cleaned = new string(price.Where(c => char.IsDigit(c) || c == '.' || c == ',').ToArray());
+        cleaned = cleaned.Replace(',', '.');
+
+        return decimal.TryParse(cleaned, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out value)
+            ? value
+            : 0m;
     }
 }
