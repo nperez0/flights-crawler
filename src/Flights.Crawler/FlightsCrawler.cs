@@ -1,8 +1,8 @@
-﻿using Flights.Crawler.Database.Repositories;
-using Flights.Crawler.Form;
+﻿using Flights.Crawler.Form;
 using Flights.Crawler.Form.FormFillers;
-using Flights.Crawler.Mapping;
-using Flights.Crawler.Models.Queries;
+using Flights.Data.Database.Repositories;
+using Flights.Data.Mapping;
+using Flights.Data.Models.Query;
 
 namespace Flights.Crawler;
 
@@ -15,10 +15,10 @@ public class FlightsCrawler(
 {
     public async Task CrawlAsync()
     {
-        var flightQueries = await flightQueryRepository.GetAllAsync();
+        var queries = await flightQueryRepository.GetEnabledQueriesAsync();
 
-        foreach (var flightQuery in flightQueries)
-            await SearchAsync(flightQuery);
+        foreach (var query in queries)
+            await SearchAsync(query);
     }
 
     private async Task SearchAsync(FlightQuery flightQuery)
@@ -31,7 +31,7 @@ public class FlightsCrawler(
         await page.SubmitFormAsync();
 
         var queryResponse = await responseInterceptor.GetFlightQueryResponseAsync();
-        var result = queryResponse.MapToResult(flightQuery);
+        var result = queryResponse.MapToResult(flightQuery.Id);
 
         await flightQueryResultRepository.SaveAsync(result);
         await page.CloseAsync();

@@ -1,6 +1,4 @@
-﻿using Flights.Crawler.Models;
-
-namespace Flights.Crawler.Form.FormFillers;
+﻿namespace Flights.Crawler.Form.FormFillers;
 
 public interface IFormFiller
 {

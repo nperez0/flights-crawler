@@ -1,6 +1,4 @@
-﻿using Flights.Crawler.Models;
-
-namespace Flights.Crawler;
+﻿namespace Flights.Crawler;
 
 public interface IFlightsCrawler
 {

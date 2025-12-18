@@ -1,4 +1,4 @@
-﻿using Flights.Crawler.Models.Query;
+﻿using Flights.Data.Models.Query;
 using Microsoft.Playwright;
 
 namespace Flights.Crawler.Form;
