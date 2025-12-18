@@ -4,7 +4,6 @@ namespace Flights.Data.Database.Repositories;
 
 public interface IFlightQueryResultRepository
 {
+    Task<FlightQueryResult[]> GetByQueryIdsAsync(Guid[] ids);
     Task SaveAsync(FlightQueryResult result);
-
-    Task<FlightQueryResult?> GetByQueryIdAsync(Guid[] id);
 }

@@ -11,3 +11,7 @@ var configuration = new ConfigurationBuilder()
 var services = new ServiceCollection()
     .RegisterComponents(configuration)
     .BuildServiceProvider();
+
+var notifier = services.GetRequiredService<IFlightsNotifier>();
+
+await notifier.NotifyAsync();

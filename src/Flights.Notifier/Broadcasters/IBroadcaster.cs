@@ -2,5 +2,5 @@
 
 public interface IBroadcaster
 {
-    Task BroadcastAsync(string message);
+    Task BroadcastAsync(BestPrice bestPrice);
 }

@@ -1,4 +1,5 @@
 <Solution>
+  <Project Path="Flights.Core/Flights.Core.csproj" Id="592305de-7952-4888-92c6-61aaff00a41a" />
   <Project Path="Flights.Crawler/Flights.Crawler.csproj" Id="80b1793b-c2d5-4c7b-94f0-25a666d09304" />
   <Project Path="Flights.Data/Flights.Data.csproj" Id="8cd0907c-2160-4df2-956e-bc05d3e96554" />
   <Project Path="Flights.Notifier/Flights.Notifier.csproj" Id="b9aa6d1e-7247-4a37-ab97-f94447f33333" />

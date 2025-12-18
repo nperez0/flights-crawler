@@ -8,13 +8,13 @@ public class TelegramBroadcaster(IOptions<TelegramOptions> options) : IBroadcast
 {
     private readonly TelegramOptions telegramOptions = options.Value;
 
-    public async Task BroadcastAsync(string message)
+    public async Task BroadcastAsync(BestPrice bestPrice)
     {
         var bot = new TelegramBotClient(telegramOptions.BotToken);
 
         await bot.SendMessage(
             chatId: telegramOptions.ChatId,
-            text: message,
+            text: "",
             parseMode: ParseMode.None,
             cancellationToken: CancellationToken.None
         );

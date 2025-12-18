@@ -1,3 +1,4 @@
+using Flights.Data.Models.Notification;
 using Flights.Data.Models.Query;
 using Flights.Data.Models.Result;
 using MongoDB.Bson;
@@ -16,6 +17,7 @@ public static class MongoDbMappings
         ConfigureFlightSolution();
         ConfigureFlightSlice();
         ConfigureResultLocation();
+        ConfigureFlightQueryNotification();
     }
 
     private static void ConfigureFlightQuery()
@@ -73,7 +75,8 @@ public static class MongoDbMappings
             cm.MapIdProperty(x => x.Id)
                 .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
             cm.MapProperty(x => x.QueryId)
-                .SetElementName("queryId");
+                .SetElementName("queryId")
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
             cm.MapProperty(x => x.Solutions)
                 .SetElementName("solutions");
             cm.MapProperty(x => x.TotalSolutionCount)
@@ -135,6 +138,27 @@ public static class MongoDbMappings
                 .SetElementName("code");
             cm.MapProperty(x => x.Name)
                 .SetElementName("name");
+        });
+    }
+
+    private static void ConfigureFlightQueryNotification()
+    {
+        BsonClassMap.RegisterClassMap<FlightQueryNotification>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapIdProperty(x => x.Id)
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
+            cm.MapProperty(x => x.QueryId)
+                .SetElementName("queryId")
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
+            cm.MapProperty(x => x.LastNotifiedPrice)
+                .SetElementName("lastNotifiedPrice");
+            cm.MapProperty(x => x.LastResultId)
+                .SetElementName("lastResultId")
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
+            cm.MapProperty(x => x.LastNotifiedAt)
+                .SetElementName("lastNotifiedAt")
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.DateTimeSerializer(DateTimeKind.Utc));
         });
     }
 }

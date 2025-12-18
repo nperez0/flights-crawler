@@ -11,9 +11,10 @@ public static class Configuration
     public static IServiceCollection RegisterComponents(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<TelegramOptions>(configuration.GetSection(TelegramOptions.SectionName));
-        
+
         services.AddTransient<IBroadcaster, TelegramBroadcaster>();
-        
+        services.AddTransient<IFlightsNotifier, FlightsNotifier>();
+
         services.RegisterDatabaseComponents();
 
         return services;

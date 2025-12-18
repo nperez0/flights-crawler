@@ -25,6 +25,7 @@ public static class Configuration
     {
         services.AddTransient<IFlightQueryRepository, FlightQueryRepository>();
         services.AddTransient<IFlightQueryResultRepository, FlightQueryResultRepository>();
+        services.AddTransient<IFlightQueryNotificationRepository, FlightQueryNotificationRepository>();
 
         return services;
     }

@@ -13,11 +13,18 @@ public class FlightQueryResultRepository : IFlightQueryResultRepository
         collection = database.GetCollection<FlightQueryResult>("results");
     }
 
+    public async Task<FlightQueryResult[]> GetByQueryIdsAsync(Guid[] queryIds)
+    {
+        if (queryIds.Length == 0)
+            return [];
+
+        var list = await collection
+            .Find(r => queryIds.Contains(r.QueryId))
+            .ToListAsync();
+
+        return [.. list];
+    }
+
     public async Task SaveAsync(FlightQueryResult result)
         => await collection.InsertOneAsync(result);
-
-    public async Task<FlightQueryResult?> GetByQueryIdAsync(Guid[] id)
-        => await collection.Find(r => id.Contains(r.QueryId))
-        .SortByDescending(r => r.SearchedAt)
-        .FirstOrDefaultAsync();
 }
