@@ -28,6 +28,8 @@ public static class MongoDbMappings
             cm.MapProperty(x => x.Type)
                 .SetElementName("type")
                 .SetSerializer(new MongoDB.Bson.Serialization.Serializers.EnumSerializer<FlightQueryType>(BsonType.String));
+            cm.MapProperty(x => x.Disabled)
+                .SetElementName("disabled");
             cm.MapProperty(x => x.Segments)
                 .SetElementName("segments");
         });
