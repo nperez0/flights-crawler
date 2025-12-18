@@ -71,19 +71,19 @@ public static class FlightQueryResultMapper
         };
     }
 
-    public static decimal ParsePrice(string? price)
+    public static double ParsePrice(string? price)
     {
         if (price.IsNullOrWhiteSpace())
-            return 0;
+            return 0d;
 
-        if (decimal.TryParse(price, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var value))
+        if (double.TryParse(price, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var value))
             return value;
 
         var cleaned = new string(price.Where(c => char.IsDigit(c) || c == '.' || c == ',').ToArray());
         cleaned = cleaned.Replace(',', '.');
 
-        return decimal.TryParse(cleaned, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out value)
+        return double.TryParse(cleaned, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out value)
             ? value
-            : 0m;
+            : 0d;
     }
 }

@@ -29,7 +29,7 @@ public static class BestPriceDetector
 
         var previousPrice = previousNotification != null
             ? previousNotification.LastNotifiedPrice
-            : (decimal?)null;
+            : (double?)null;
 
         if (previousPrice.HasValue && bestPrice >= previousPrice.Value)
             return;

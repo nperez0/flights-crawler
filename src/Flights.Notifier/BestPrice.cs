@@ -4,10 +4,10 @@ using Flights.Data.Models.Result;
 
 namespace Flights.Notifier;
 
-public class BestPrice(FlightQuery query, FlightQueryResult bestResult, FlightQueryNotification? previousNotification, decimal price)
+public class BestPrice(FlightQuery query, FlightQueryResult bestResult, FlightQueryNotification? previousNotification, double price)
 {
     public FlightQuery Query { get; } = query;
     public FlightQueryResult BestResult { get; } = bestResult;
     public FlightQueryNotification? PreviousNotification { get; } = previousNotification;
-    public decimal Price { get; } = price;
+    public double Price { get; } = price;
 }
