@@ -1,6 +1,7 @@
 ﻿using Flights.Data.Database.Repositories;
 using Flights.Data.Models.Notification;
 using Flights.Notifier.Broadcasters;
+using Flights.Notifier.Pricing;
 
 namespace Flights.Notifier;
 

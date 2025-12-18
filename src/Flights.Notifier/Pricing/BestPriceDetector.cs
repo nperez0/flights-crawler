@@ -1,6 +1,6 @@
 ﻿using Flights.Data.Models.Query;
 
-namespace Flights.Notifier;
+namespace Flights.Notifier.Pricing;
 
 public static class BestPriceDetector
 {

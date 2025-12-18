@@ -2,7 +2,7 @@
 using Flights.Data.Models.Query;
 using Flights.Data.Models.Result;
 
-namespace Flights.Notifier;
+namespace Flights.Notifier.Pricing;
 
 public class BestPrice(FlightQuery query, FlightQueryResult bestResult, FlightQueryNotification? previousNotification, double price)
 {

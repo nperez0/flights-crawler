@@ -1,6 +1,7 @@
 ﻿using Flights.Data.Models.Query;
 using Flights.Data.Models.Response;
 using Flights.Data.Models.Result;
+using Flights.Notifier.Pricing;
 using Microsoft.Extensions.Options;
 using System;
 using System.Text;
