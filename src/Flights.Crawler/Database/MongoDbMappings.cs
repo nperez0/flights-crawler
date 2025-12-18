@@ -1,0 +1,138 @@
+using Flights.Crawler.Models.Queries;
+using Flights.Crawler.Models.Query;
+using Flights.Crawler.Models.Result;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
+
+namespace Flights.Crawler.Database;
+
+public static class MongoDbMappings
+{
+    public static void ConfigureMappings()
+    {
+        ConfigureFlightQuery();
+        ConfigureFlightQuerySegment();
+        ConfigureQueryLocation();
+        ConfigureFlightQueryResult();
+        ConfigureFlightSolution();
+        ConfigureFlightSlice();
+        ConfigureResultLocation();
+    }
+
+    private static void ConfigureFlightQuery()
+    {
+        BsonClassMap.RegisterClassMap<FlightQuery>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapIdProperty(x => x.Id)
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
+            cm.MapProperty(x => x.Type)
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.EnumSerializer<FlightQueryType>(BsonType.String));
+            cm.MapProperty(x => x.Segments)
+                .SetElementName("segments");
+        });
+    }
+
+    private static void ConfigureFlightQuerySegment()
+    {
+        BsonClassMap.RegisterClassMap<FlightQuerySegment>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapProperty(x => x.Origin)
+                .SetElementName("origin");
+            cm.MapProperty(x => x.Destination)
+                .SetElementName("destination");
+            cm.MapProperty(x => x.Date)
+                .SetElementName("date")
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.DateTimeSerializer(DateTimeKind.Utc));
+            cm.MapProperty(x => x.Days)
+                .SetElementName("days")
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.EnumSerializer<FlightQueryDays>(BsonType.String));
+        });
+    }
+
+    private static void ConfigureQueryLocation()
+    {
+        BsonClassMap.RegisterClassMap<Models.Queries.Location>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapProperty(x => x.City)
+                .SetElementName("city");
+            cm.MapProperty(x => x.Country)
+                .SetElementName("country");
+        });
+    }
+
+    private static void ConfigureFlightQueryResult()
+    {
+        BsonClassMap.RegisterClassMap<FlightQueryResult>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapIdProperty(x => x.Id)
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
+            cm.MapProperty(x => x.Query)
+                .SetElementName("query");
+            cm.MapProperty(x => x.Solutions)
+                .SetElementName("solutions");
+            cm.MapProperty(x => x.TotalSolutionCount)
+                .SetElementName("totalSolutionCount");
+            cm.MapProperty(x => x.SearchedAt)
+                .SetElementName("searchedAt")
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.DateTimeSerializer(DateTimeKind.Utc));
+        });
+    }
+
+    private static void ConfigureFlightSolution()
+    {
+        BsonClassMap.RegisterClassMap<FlightSolution>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapProperty(x => x.Id)
+                .SetElementName("id");
+            cm.MapProperty(x => x.Price)
+                .SetElementName("price");
+            cm.MapProperty(x => x.PassengerCount)
+                .SetElementName("passengerCount");
+            cm.MapProperty(x => x.Slices)
+                .SetElementName("slices");
+        });
+    }
+
+    private static void ConfigureFlightSlice()
+    {
+        BsonClassMap.RegisterClassMap<FlightSlice>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapProperty(x => x.Origin)
+                .SetElementName("origin");
+            cm.MapProperty(x => x.Destination)
+                .SetElementName("destination");
+            cm.MapProperty(x => x.DepartureTime)
+                .SetElementName("departureTime")
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.DateTimeSerializer(DateTimeKind.Utc));
+            cm.MapProperty(x => x.ArrivalTime)
+                .SetElementName("arrivalTime")
+                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.DateTimeSerializer(DateTimeKind.Utc));
+            cm.MapProperty(x => x.DurationMinutes)
+                .SetElementName("durationMinutes");
+            cm.MapProperty(x => x.StopCount)
+                .SetElementName("stopCount");
+            cm.MapProperty(x => x.FlightNumbers)
+                .SetElementName("flightNumbers");
+            cm.MapProperty(x => x.Cabins)
+                .SetElementName("cabins");
+        });
+    }
+
+    private static void ConfigureResultLocation()
+    {
+        BsonClassMap.RegisterClassMap<Models.Result.Location>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapProperty(x => x.Code)
+                .SetElementName("code");
+            cm.MapProperty(x => x.Name)
+                .SetElementName("name");
+        });
+    }
+}

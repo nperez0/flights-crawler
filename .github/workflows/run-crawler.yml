@@ -1,0 +1,42 @@
+name: Flights Crawler
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Every hour on the hour (UTC)
+  workflow_dispatch: {}
+
+concurrency:
+  group: flights-crawler
+  cancel-in-progress: false
+
+jobs:
+  run-crawler:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    env:
+      MONGO_CONNECTION_STRING: ${{ secrets.MONGO_CONNECTION_STRING }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore src/Flights.Crawler/Flights.Crawler.csproj
+
+      - name: Build
+        run: dotnet build src/Flights.Crawler/Flights.Crawler.csproj --configuration Release --no-restore
+
+      - name: Install Playwright CLI and browsers
+        run: |
+          cd src/Flights.Crawler/bin/Release/net10.0
+          chmod +x ./playwright.ps1
+          pwsh ./playwright.ps1 install chromium --with-deps
+
+      - name: Run Crawler
+        run: dotnet run --project src/Flights.Crawler/Flights.Crawler.csproj --configuration Release

@@ -1,0 +1,17 @@
+--batch259601303450453585
+Content-Type: application/http
+Content-Transfer-Encoding: binary
+Content-ID: <batch259601303450453585+gapiRequest@googleapis.com>
+
+POST /v1/search?key=AIzaSyBH1mte6BdKzvf0c2mYprkyvfHCRWmfX7g&alt=json
+x-alkali-application-key: applications/matrix
+x-alkali-auth-apps-namespace: alkali_v2
+x-alkali-auth-entities-namespace: alkali_v2
+X-JavaScript-User-Agent: google-api-javascript-client/1.1.0
+X-Requested-With: XMLHttpRequest
+Content-Type: application/json
+X-Goog-Encode-Response-If-Executable: base64
+X-ClientDetails: appVersion=5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F143.0.0.0%20Safari%2F537.36&platform=Win32&userAgent=Mozilla%2F5.0%20(Windows%20NT%2010.0%3B%20Win64%3B%20x64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F143.0.0.0%20Safari%2F537.36
+
+{"summarizers":["carrierStopMatrix","currencyNotice","solutionList","itineraryPriceSlider","itineraryCarrierList","itineraryDepartureTimeRanges","itineraryArrivalTimeRanges","durationSliderItinerary","itineraryOrigins","itineraryDestinations","itineraryStopCountList","warningsItinerary"],"inputs":{"filter":{},"page":{"current":1,"size":25},"pax":{"adults":1},"slices":[{"origins":["VLC"],"destinations":["OSA"],"date":"2026-09-10","dateModifier":{"minus":2,"plus":2},"isArrivalDate":false,"filter":{"warnings":{"values":[]}},"selected":false},{"origins":["TYO"],"destinations":["VLC"],"date":"2026-09-10","dateModifier":{"minus":2,"plus":2},"isArrivalDate":false,"filter":{"warnings":{"values":[]}},"selected":false}],"firstDayOfWeek":"SUNDAY","internalUser":false,"sliceIndex":0,"sorts":"default","cabin":"COACH","maxLegsRelativeToMin":1,"changeOfAirport":true,"checkAvailability":true},"summarizerSet":"wholeTrip","name":"specificDatesSlice","bgProgramResponse":"!sLOls-vNAAZOY01bbmNCHfkQN4AGNrU7ADQBEArZ1N8KfxfEU5jqZgMO02hQIkre1x2gKb2musSz4U89xgzVvmK2iijztFU0eJ7OvNs0AgAAAE5SAAAAB2gBB34AQsvBSfCwFfPG37scdEbdkJWLg7LK3yUKJix4mkjl1wc9kfuucGRPKmot32MMs_ORkXHThlwMiNQu49YNHlon5PutMZkDzzBhrM1uZcdGIESCA88jRhF6sHWzHbYxnwl490_-Bh3-iSrH9ftbNhuZ4YEmV9S5tS-Cv2ko312NN-yUL9_eMj4mEFigWVVnbZrzJHoRDsyHLt6QPGDtqFLbp64Zvkf9mjKRJbEc5JhV5ubT8-7MIIPYvrY5V5RQMmPbOMh98-Z7-FKQkMe0FNZWJ0RsSBJuWwhtyx-Q2X_8j4ZJIf9DDfUBDxRteiyOUREIpNeojM2-MWgslGnM0fQ9Ec9QKjDtv8KlnVIuhUtSLYtUD9HrL73Yub-qgq3ejumZ5tKyKfMAFBtjcvMsaVlKcW_DIms6yc0K5y4d0DEs6HRhtT6hO35y3nJWav0-slQEG6-2nb0ed8sXaLCC1Qj4fpYTw1Y39CaMunBFmYjQN6GaSzTaviV1OS8KnKVHSBuBcbBbUDDjWMSD7jvkHoT9tGRXVMNk2V4Htzeqzi6cYcyHtUF9BBkIb9_ktGcBc2cr-nuSQ9fUEpMO-0IwCBXyKPMozyQeu3GVHi-bBXpcPcMzFA4p315jWzC5vL8DPrdugO5Fxj8J0LPr_fL1VldXw9LA-ymD4hMLpQURI6C5op88GW0YZFqnP_vOPqWCJU3g-lmBdHpW-WQoFgaBRKMXwT50n8ZAurr6HFj2tinu6RddJ38-qFpey2aXwA5FB-cIoK_DSF_I8SF4lq68MAkX9t3CiNDUELKAtTotywlC-javiaG-t4J17iMAn-9gr2-6R4-ZkNTjMFISSZ0mliK_6nBDYQox0PmHLOEl33R7lUSxFrVCrPfXN9cLjd4YrfBZd30cjXxG7ZCMjEDXYiJ4OKP8wPEY86sjR1I9_O_3jHUyiXmTAkyyx4H77P_K8QsaHe1_DHj5t9YCe7oNBEamuVE5tgtm-gAHv_DQq3QM5PNxzJzEEihaH40PNvZjDDpTbZ_gspTLs2FslS9lTK76wlE-lQ94Y6YkM0d14g_rKq18vDBN0OV5wO3K41dnMtDy3TbJqEP39mRF-rtwfuyOGYqwNFjiQFDmFWWVPcPonHokFWpqcQYblvUxsSoz_NCrpjfJY_wqCBxVebpFvafFvvrBtboDHilsWALOn0SuCrDFPNOtOwCpga1uqYG6Hd6zELUfmaTWns7JAnsObL3BJeH_oQHflpeLYJjkVzaN7UZ34Z7oqOofcpUt6MWxBgsfwLxLRR91qR_Ghrp2_NhdOitECvUttlSJIpBhXRdNW3Si9Ze4TGtpDwGhPLVzDERm539xNCLMKymY4K3oEVLHeRgCkgN2A4-F0ndKC2H_WrKDHkOziQ"}
+--batch259601303450453585--

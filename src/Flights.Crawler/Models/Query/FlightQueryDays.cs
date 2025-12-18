@@ -1,0 +1,10 @@
+﻿namespace Flights.Crawler.Models.Query;
+
+public enum FlightQueryDays
+{
+    ThisDayOnly,
+    DayBefore,
+    DayAfter,
+    PlusMinusOneDay,
+    PlusMinusTwoDays
+}
