@@ -17,7 +17,7 @@ public class FlightsCrawler(
     {
         var queries = await flightQueryRepository.GetEnabledQueriesAsync();
 
-        foreach (var query in queries)
+        foreach (var query in queries.Where(q => q.Type == FlightQueryType.RoundTrip))
             await SearchAsync(query);
     }
 

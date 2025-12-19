@@ -1,5 +1,6 @@
 ﻿using Flights.Data.Models.Query;
 using Microsoft.Playwright;
+using System.Text.RegularExpressions;
 
 namespace Flights.Crawler.Form;
 
@@ -12,42 +13,53 @@ public static class FormActions
         await selMultiCityButton.ClickAsync();
     }
 
-    public static async Task SelectOriginAsync(this IPage page, string city, string country, int position)
+    public static async Task SelectOriginAsync(this IPage page, string city, string country, int position = 0)
     {
         var selOriginFlight = page.Locator("matrix-location-field[placeholder='Origin'] input");
-        var selOriginCity = page.Locator($"mat-option:has-text('{city}, {country}')");
+        var selOriginCity = page.Locator($"mat-option")
+            .Filter(new() { HasTextRegex = new Regex($"{Regex.Escape(city)}.*{Regex.Escape(country)}", RegexOptions.IgnoreCase) });
 
         await selOriginFlight
             .Select(position)
             .FillAsync(city);
 
-        await selOriginCity.WaitForAsync(new LocatorWaitForOptions { State = WaitForSelectorState.Visible });
-        await selOriginCity.ClickAsync();
+        await selOriginCity.Select(0).WaitForAsync(new LocatorWaitForOptions { State = WaitForSelectorState.Visible });
+        await selOriginCity.Select(0).ClickAsync();
     }
 
-    public static async Task SelectDestinationAsync(this IPage page, string city, string country, int position)
+    public static async Task SelectDestinationAsync(this IPage page, string city, string country, int position = 0)
     {
         var selDestinationFlight = page.Locator("matrix-location-field[placeholder='Destination'] input");
-        var selDestinationCity = page.Locator($"mat-option:has-text('{city}, {country}')");
+        var selDestinationCity = page.Locator($"mat-option")
+            .Filter(new() { HasTextRegex = new Regex($"{Regex.Escape(city)}.*{Regex.Escape(country)}", RegexOptions.IgnoreCase) });
 
         await selDestinationFlight
             .Select(position)
             .FillAsync(city);
 
-        await selDestinationCity.WaitForAsync(new LocatorWaitForOptions { State = WaitForSelectorState.Visible });
-        await selDestinationCity.ClickAsync();
+        await selDestinationCity.Select(0).WaitForAsync(new LocatorWaitForOptions { State = WaitForSelectorState.Visible });
+        await selDestinationCity.Select(0).ClickAsync();
     }
 
-    public static async Task SelectDate(this IPage page, string date, int position)
+    public static async Task SelectDate(this IPage page, DateOnly date, int position)
     {
         var selDateFlight = page.Locator("input[matinput][required].mat-datepicker-input");
 
         await selDateFlight
             .Select(position)
-            .FillAsync(date);
+            .FillAsync(date.ToString("MM/dd/yyyy"));
     }
 
-    public static async Task SelectDaysAsync(this IPage page, FlightQueryDays searchDays, FlightQueryDays previousSearchDays, int position)
+    public static async Task SelectDateRange(this IPage page, DateOnly start, DateOnly end)
+    {
+        var startInput = page.Locator("mat-date-range-input input[matstartdate]");
+        var endInput = page.Locator("mat-date-range-input input[matenddate]");
+
+        await startInput.FillAsync(start.ToString("MM/dd/yyyy"));
+        await endInput.FillAsync(end.ToString("MM/dd/yyyy"));
+    }
+
+    public static async Task SelectDaysAsync(this IPage page, FlightQueryDays searchDays, FlightQueryDays previousSearchDays, int position = 0)
     {
         var selDays = page.GetByRole(AriaRole.Combobox, new() { Name = GetOptionName(previousSearchDays) });
         var selDaysOption = page.Locator($"mat-option:has-text('{GetOptionName(searchDays)}')");

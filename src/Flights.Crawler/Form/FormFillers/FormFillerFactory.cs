@@ -5,13 +5,13 @@ namespace Flights.Crawler.Form.FormFillers;
 
 public class FormFillerFactory : IFormFillerFactory
 {
-    public IFormFiller Create(IPage page, FlightQuery search)
+    public IFormFiller Create(IPage page, FlightQuery query)
     {
-        return search.Type switch
+        return query.Type switch
         {
-            FlightQueryType.OneWay => new OneWayFormFiller(page, search),
-            FlightQueryType.RoundTrip => new RoundTripFormFiller(page, search),
-            FlightQueryType.MultiCity => new MultiCityFormFiller(page, search),
+            FlightQueryType.OneWay => new OneWayFormFiller(page, query),
+            FlightQueryType.RoundTrip => new RoundTripFormFiller(page, query),
+            FlightQueryType.MultiCity => new MultiCityFormFiller(page, query),
             _ => throw new ArgumentOutOfRangeException()
         };
     }

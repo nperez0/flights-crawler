@@ -3,6 +3,7 @@ using Flights.Data.Models.Query;
 using Flights.Data.Models.Result;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
 
 namespace Flights.Data.Database;
 
@@ -26,10 +27,10 @@ public static class MongoDbMappings
         {
             cm.AutoMap();
             cm.MapIdProperty(x => x.Id)
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
+                .SetSerializer(new GuidSerializer(BsonType.String));
             cm.MapProperty(x => x.Type)
                 .SetElementName("type")
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.EnumSerializer<FlightQueryType>(BsonType.String));
+                .SetSerializer(new EnumSerializer<FlightQueryType>(BsonType.String));
             cm.MapProperty(x => x.Disabled)
                 .SetElementName("disabled");
             cm.MapProperty(x => x.Segments)
@@ -46,12 +47,15 @@ public static class MongoDbMappings
                 .SetElementName("origin");
             cm.MapProperty(x => x.Destination)
                 .SetElementName("destination");
-            cm.MapProperty(x => x.Date)
-                .SetElementName("date")
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.DateTimeSerializer(DateTimeKind.Utc));
+            cm.MapProperty(x => x.Start)
+                .SetElementName("start")
+                .SetSerializer(new DateOnlySerializer());
+            cm.MapProperty(x => x.End)
+                .SetElementName("end")
+                .SetSerializer(new NullableSerializer<DateOnly>(new DateOnlySerializer()));
             cm.MapProperty(x => x.Days)
                 .SetElementName("days")
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.EnumSerializer<FlightQueryDays>(BsonType.String));
+                .SetSerializer(new EnumSerializer<FlightQueryDays>(BsonType.String));
         });
     }
 
@@ -75,17 +79,17 @@ public static class MongoDbMappings
         {
             cm.AutoMap();
             cm.MapIdProperty(x => x.Id)
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
+                .SetSerializer(new GuidSerializer(BsonType.String));
             cm.MapProperty(x => x.QueryId)
                 .SetElementName("queryId")
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
+                .SetSerializer(new GuidSerializer(BsonType.String));
             cm.MapProperty(x => x.Solutions)
                 .SetElementName("solutions");
             cm.MapProperty(x => x.TotalSolutionCount)
                 .SetElementName("totalSolutionCount");
             cm.MapProperty(x => x.SearchedAt)
                 .SetElementName("searchedAt")
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.DateTimeSerializer(DateTimeKind.Utc));
+                .SetSerializer(new DateTimeSerializer(DateTimeKind.Utc));
         });
     }
 
@@ -116,10 +120,10 @@ public static class MongoDbMappings
                 .SetElementName("destination");
             cm.MapProperty(x => x.DepartureTime)
                 .SetElementName("departureTime")
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.DateTimeSerializer(DateTimeKind.Utc));
+                .SetSerializer(new DateTimeSerializer(DateTimeKind.Utc));
             cm.MapProperty(x => x.ArrivalTime)
                 .SetElementName("arrivalTime")
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.DateTimeSerializer(DateTimeKind.Utc));
+                .SetSerializer(new DateTimeSerializer(DateTimeKind.Utc));
             cm.MapProperty(x => x.DurationMinutes)
                 .SetElementName("durationMinutes");
             cm.MapProperty(x => x.StopCount)
@@ -149,18 +153,18 @@ public static class MongoDbMappings
         {
             cm.AutoMap();
             cm.MapIdProperty(x => x.Id)
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
+                .SetSerializer(new GuidSerializer(BsonType.String));
             cm.MapProperty(x => x.QueryId)
                 .SetElementName("queryId")
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
+                .SetSerializer(new GuidSerializer(BsonType.String));
             cm.MapProperty(x => x.LastNotifiedPrice)
                 .SetElementName("lastNotifiedPrice");
             cm.MapProperty(x => x.LastResultId)
                 .SetElementName("lastResultId")
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.GuidSerializer(BsonType.String));
+                .SetSerializer(new GuidSerializer(BsonType.String));
             cm.MapProperty(x => x.LastNotifiedAt)
                 .SetElementName("lastNotifiedAt")
-                .SetSerializer(new MongoDB.Bson.Serialization.Serializers.DateTimeSerializer(DateTimeKind.Utc));
+                .SetSerializer(new DateTimeSerializer(DateTimeKind.Utc));
         });
     }
 }

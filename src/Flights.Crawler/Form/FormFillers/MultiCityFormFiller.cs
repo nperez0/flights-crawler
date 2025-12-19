@@ -3,23 +3,23 @@ using Microsoft.Playwright;
 
 namespace Flights.Crawler.Form.FormFillers;
 
-public class MultiCityFormFiller(IPage page, FlightQuery search) : IFormFiller
+public class MultiCityFormFiller(IPage page, FlightQuery query) : IFormFiller
 {
     public async Task FillFormAsync()
     {
         await page.SelectMultiCitySearchAsync();
 
-        for (int i = 0; i < search.Segments.Length; i++)
+        for (int i = 0; i < query.Segments.Length; i++)
         {
-            var flight = search.Segments[i];
+            var flight = query.Segments[i];
 
             await page.SelectOriginAsync(flight.Origin.City, flight.Origin.Country, i);
             await page.SelectDestinationAsync(flight.Destination.City, flight.Destination.Country, i);
-            await page.SelectDate(flight.Date.ToString("MM/dd/yyyy"), i);
+            await page.SelectDate(flight.Start, i);
 
-            await page.SelectDaysAsync(flight.Days, i == 0 ? FlightQueryDays.ThisDayOnly : search.Segments[i - 1].Days, i);
+            await page.SelectDaysAsync(flight.Days, i == 0 ? FlightQueryDays.ThisDayOnly : query.Segments[i - 1].Days, i);
 
-            if (i < search.Segments.Length - 1)
+            if (i < query.Segments.Length - 1)
                 await page.AddFlightAsync(i);
         }
     }

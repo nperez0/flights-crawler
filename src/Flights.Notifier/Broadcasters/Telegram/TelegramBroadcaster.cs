@@ -1,9 +1,7 @@
 ﻿using Flights.Data.Models.Query;
-using Flights.Data.Models.Response;
 using Flights.Data.Models.Result;
 using Flights.Notifier.Pricing;
 using Microsoft.Extensions.Options;
-using System;
 using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
@@ -32,9 +30,22 @@ public class TelegramBroadcaster(IOptions<TelegramOptions> options) : IBroadcast
     private string BuildMessage(BestPrice bestPrice)
         => bestPrice.Query.Type switch
         {
+            FlightQueryType.RoundTrip => BuildRoundTripMessage(bestPrice),
             FlightQueryType.MultiCity => BuildMultiCityMessage(bestPrice),
             _ => string.Empty,
         };
+
+    private static string BuildRoundTripMessage(BestPrice bestPrice)
+    {
+        var message = new StringBuilder();
+        var segmentMessages = BuildSegmentMessages(bestPrice);
+
+        message.AppendJoin(Environment.NewLine, segmentMessages);
+        message.AppendLine();
+        message.Append($"{bestPrice.Price:F2}");
+
+        return message.ToString();
+    }
 
     private static string BuildMultiCityMessage(BestPrice bestPrice)
     {
@@ -64,6 +75,8 @@ public class TelegramBroadcaster(IOptions<TelegramOptions> options) : IBroadcast
         var duration = TimeSpan.FromMinutes(durationMinutes);
         var formattedDuration = $"{(int)duration.TotalHours:00}h {duration.Minutes:00}m";
 
-        return $"{segment.Origin.Code} -> {segment.Destination.Code} - {segment.Date:yyyy-MM-dd} ({formattedDuration})";
+        return segment.End.HasValue 
+            ? $"{segment.Origin.Code} -> {segment.Destination.Code} - {segment.Start:yyyy-MM-dd} - {segment.End:yyyy-MM-dd} ({formattedDuration})"
+            : $"{segment.Origin.Code} -> {segment.Destination.Code} - {segment.Start:yyyy-MM-dd} ({formattedDuration})";
     }
 }

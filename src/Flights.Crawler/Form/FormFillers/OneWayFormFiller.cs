@@ -3,7 +3,7 @@ using Microsoft.Playwright;
 
 namespace Flights.Crawler.Form.FormFillers;
 
-public class OneWayFormFiller(IPage page, FlightQuery search) : IFormFiller
+public class OneWayFormFiller(IPage page, FlightQuery query) : IFormFiller
 {
     public Task FillFormAsync()
     {
