@@ -18,22 +18,35 @@ public class FlightsCrawler(
         var queries = await flightQueryRepository.GetEnabledQueriesAsync();
 
         foreach (var query in queries.Where(q => q.Type == FlightQueryType.RoundTrip))
-            await SearchAsync(query);
+            await ExecuteQuery(query);
     }
 
-    private async Task SearchAsync(FlightQuery flightQuery)
+    private async Task ExecuteQuery(FlightQuery flightQuery)
     {
         var page = await playwrightPageFactory.CreateAsync();
-        var responseInterceptor = await responseInterceptorFactory.CreateAsync(page);
-        var formFiller = formFillerFactory.Create(page, flightQuery);
 
-        await formFiller.FillFormAsync();
-        await page.SubmitFormAsync();
+        try
+        {
+            var responseInterceptor = await responseInterceptorFactory.CreateAsync(page);
+            var formFiller = formFillerFactory.Create(page, flightQuery);
 
-        var queryResponse = await responseInterceptor.GetFlightQueryResponseAsync();
-        var result = queryResponse.MapToResult(flightQuery.Id);
+            await formFiller.FillFormAsync();
+            await page.SubmitFormAsync();
 
-        await flightQueryResultRepository.SaveAsync(result);
-        await page.CloseAsync();
+            var queryResponse = await responseInterceptor.GetFlightQueryResponseAsync();
+            var result = queryResponse.MapToResult(flightQuery.Id);
+
+            await flightQueryResultRepository.SaveAsync(result);
+            await page.CloseAsync();
+        }
+        catch
+        {
+            await page.TakeScreenshotAsync();
+            throw;
+        }   
+        finally
+        {
+            await page.CloseAsync();
+        }
     }
 }

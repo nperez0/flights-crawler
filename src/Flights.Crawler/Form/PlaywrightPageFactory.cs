@@ -15,6 +15,7 @@ public class PlaywrightPageFactory : IDisposable, IPlaywrightPageFactory
         var browser = await playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
         {
             Headless = true,
+            SlowMo = 50,
             Args =
             [
                 "--disable-blink-features=AutomationControlled",
