@@ -25,28 +25,16 @@ public class FlightsCrawler(
     {
         var page = await playwrightPageFactory.CreateAsync();
 
-        try
-        {
-            var responseInterceptor = await responseInterceptorFactory.CreateAsync(page);
-            var formFiller = formFillerFactory.Create(page, flightQuery);
+        var responseInterceptor = await responseInterceptorFactory.CreateAsync(page);
+        var formFiller = formFillerFactory.Create(page, flightQuery);
 
-            await formFiller.FillFormAsync();
-            await page.SubmitFormAsync();
+        await formFiller.FillFormAsync();
+        await page.SubmitFormAsync();
 
-            var queryResponse = await responseInterceptor.GetFlightQueryResponseAsync();
-            var result = queryResponse.MapToResult(flightQuery.Id);
+        var queryResponse = await responseInterceptor.GetFlightQueryResponseAsync();
+        var result = queryResponse.MapToResult(flightQuery.Id);
 
-            await flightQueryResultRepository.SaveAsync(result);
-            await page.CloseAsync();
-        }
-        catch
-        {
-            await page.TakeScreenshotAsync();
-            throw;
-        }   
-        finally
-        {
-            await page.CloseAsync();
-        }
+        await flightQueryResultRepository.SaveAsync(result);
+        await page.CloseAsync();
     }
 }

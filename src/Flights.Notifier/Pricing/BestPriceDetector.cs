@@ -13,7 +13,7 @@ public static class BestPriceDetector
     {
         context.LastResults.TryGetValue(query.Id, out var latestResult);
 
-        if (latestResult is { Solutions.Length: 0 })
+        if (latestResult is null || latestResult is { Solutions.Length: 0 })
             return;
 
         var bestSolution = latestResult!.Solutions
