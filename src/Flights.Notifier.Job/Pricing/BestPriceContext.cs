@@ -2,7 +2,7 @@
 using Flights.Data.Models.Query;
 using Flights.Data.Models.Result;
 
-namespace Flights.Notifier.Pricing;
+namespace Flights.Notifier.Job.Pricing;
 
 public class BestPriceContext(FlightQuery[] queries, FlightQueryResult[] results, FlightQueryNotification[] notifications)
 {

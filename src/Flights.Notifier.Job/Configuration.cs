@@ -1,10 +1,10 @@
 ﻿using Flights.Data.Database;
-using Flights.Notifier.Broadcasters;
-using Flights.Notifier.Broadcasters.Telegram;
+using Flights.Notifier.Job.Broadcasters;
+using Flights.Notifier.Job.Broadcasters.Telegram;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Flights.Notifier;
+namespace Flights.Notifier.Job;
 
 public static class Configuration
 {

@@ -1,9 +1,9 @@
 ﻿using Flights.Data.Database.Repositories;
 using Flights.Data.Models.Notification;
-using Flights.Notifier.Broadcasters;
-using Flights.Notifier.Pricing;
+using Flights.Notifier.Job.Broadcasters;
+using Flights.Notifier.Job.Pricing;
 
-namespace Flights.Notifier;
+namespace Flights.Notifier.Job;
 
 public class FlightsNotifier(
     IFlightQueryRepository flightQueryRepository,

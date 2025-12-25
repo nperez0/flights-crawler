@@ -1,12 +1,12 @@
 ﻿using Flights.Data.Models.Query;
 using Flights.Data.Models.Result;
-using Flights.Notifier.Pricing;
+using Flights.Notifier.Job.Pricing;
 using Microsoft.Extensions.Options;
 using System.Text;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
-namespace Flights.Notifier.Broadcasters.Telegram;
+namespace Flights.Notifier.Job.Broadcasters.Telegram;
 
 public class TelegramBroadcaster(IOptions<TelegramOptions> options) : IBroadcaster
 {

@@ -1,5 +1,4 @@
-﻿
-namespace Flights.Notifier;
+﻿namespace Flights.Notifier.Job;
 
 public interface IFlightsNotifier
 {

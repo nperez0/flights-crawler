@@ -29,10 +29,10 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Restore
-        run: dotnet restore src/Flights.Notifier/Flights.Notifier.csproj
+        run: dotnet restore src/Flights.Notifier.Job/Flights.Notifier.Job.csproj
 
       - name: Build
-        run: dotnet build src/Flights.Notifier/Flights.Notifier.csproj --configuration Release --no-restore
+        run: dotnet build src/Flights.Notifier.Job/Flights.Notifier.Job.csproj --configuration Release --no-restore
 
       - name: Run Notifier
-        run: dotnet run --project src/Flights.Notifier/Flights.Notifier.csproj --configuration Release
+        run: dotnet run --project src/Flights.Notifier.Job/Flights.Notifier.Job.csproj --configuration Release

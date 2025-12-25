@@ -4,5 +4,5 @@
   <Project Path="Flights.Crawler.Job/Flights.Crawler.Job.csproj" />
   <Project Path="Flights.Crawler/Flights.Crawler.csproj" Id="611cbeea-6750-4612-8610-ac00fd678599" />
   <Project Path="Flights.Data/Flights.Data.csproj" Id="8cd0907c-2160-4df2-956e-bc05d3e96554" />
-  <Project Path="Flights.Notifier/Flights.Notifier.csproj" Id="b9aa6d1e-7247-4a37-ab97-f94447f33333" />
+  <Project Path="Flights.Notifier.Job/Flights.Notifier.Job.csproj" />
 </Solution>

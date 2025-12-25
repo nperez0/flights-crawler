@@ -1,4 +1,4 @@
-namespace Flights.Notifier.Broadcasters.Telegram;
+namespace Flights.Notifier.Job.Broadcasters.Telegram;
 
 public class TelegramOptions
 {

@@ -1,6 +1,6 @@
-﻿using Flights.Notifier.Pricing;
+﻿using Flights.Notifier.Job.Pricing;
 
-namespace Flights.Notifier.Broadcasters;
+namespace Flights.Notifier.Job.Broadcasters;
 
 public interface IBroadcaster
 {
