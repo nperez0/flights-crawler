@@ -1,6 +1,6 @@
 ﻿using Flights.Data.Models.Response;
 
-namespace Flights.Crawler.Form;
+namespace Flights.Crawler.Ita.Form;
 
 public interface IQueryResponseInterceptor
 {

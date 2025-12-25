@@ -1,7 +1,7 @@
 ﻿using Flights.Data.Models.Response;
 using Microsoft.Playwright;
 
-namespace Flights.Crawler.Form;
+namespace Flights.Crawler.Ita.Form;
 
 public class QueryResponseInterceptor(IPage page) : IQueryResponseInterceptor
 {

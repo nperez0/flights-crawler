@@ -2,7 +2,7 @@
 using Microsoft.Playwright;
 using System.Text.RegularExpressions;
 
-namespace Flights.Crawler.Form;
+namespace Flights.Crawler.Ita.Form;
 
 public static class FormActions
 {

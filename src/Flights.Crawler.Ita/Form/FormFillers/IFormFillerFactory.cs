@@ -1,7 +1,7 @@
 ﻿using Flights.Data.Models.Query;
 using Microsoft.Playwright;
 
-namespace Flights.Crawler.Form.FormFillers;
+namespace Flights.Crawler.Ita.Form.FormFillers;
 
 public interface IFormFillerFactory
 {

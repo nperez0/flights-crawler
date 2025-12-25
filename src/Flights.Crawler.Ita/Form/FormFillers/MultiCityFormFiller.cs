@@ -1,7 +1,7 @@
 ﻿using Flights.Data.Models.Query;
 using Microsoft.Playwright;
 
-namespace Flights.Crawler.Form.FormFillers;
+namespace Flights.Crawler.Ita.Form.FormFillers;
 
 public class MultiCityFormFiller(IPage page, FlightQuery query) : IFormFiller
 {

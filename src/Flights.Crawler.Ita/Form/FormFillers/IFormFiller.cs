@@ -1,4 +1,4 @@
-﻿namespace Flights.Crawler.Form.FormFillers;
+﻿namespace Flights.Crawler.Ita.Form.FormFillers;
 
 public interface IFormFiller
 {

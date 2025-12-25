@@ -25,6 +25,6 @@ public class FlightQueryResultRepository : IFlightQueryResultRepository
         return [.. list];
     }
 
-    public async Task SaveAsync(FlightQueryResult result)
-        => await collection.InsertOneAsync(result);
+    public async Task SaveAsync(FlightQueryResult[] results)
+        => await collection.InsertManyAsync(results);
 }

@@ -1,7 +1,7 @@
-﻿using Flights.Crawler;
+﻿using Flights.Crawler.Job;
 using Microsoft.Extensions.DependencyInjection;
 
 var services = new ServiceCollection().RegisterComponents().BuildServiceProvider();
-var flightCrawler = services.GetRequiredService<IFlightsCrawler>();
+var job = services.GetRequiredService<FlightsCrawlerJob>();
 
-await flightCrawler.CrawlAsync();
+await job.ExecuteAsync();

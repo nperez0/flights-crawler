@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Playwright" Version="1.57.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Flights.Crawler\Flights.Crawler.csproj" />
     <ProjectReference Include="..\Flights.Data\Flights.Data.csproj" />
   </ItemGroup>
 
