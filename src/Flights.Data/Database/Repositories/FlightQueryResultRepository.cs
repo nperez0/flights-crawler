@@ -25,6 +25,18 @@ public class FlightQueryResultRepository : IFlightQueryResultRepository
         return [.. list];
     }
 
+    public async Task<FlightQueryResult[]> GetResultsOlderThanAsync(DateTime cutoffDate)
+        => await collection.Find(r => r.SearchedAt < cutoffDate).ToListAsync() is var list
+            ? [.. list]
+            : [];
+
     public async Task SaveAsync(FlightQueryResult[] results)
         => await collection.InsertManyAsync(results);
+
+    public async Task DeleteResultsAsync(FlightQueryResult[] results)
+    {
+        var resultIds = results.Select(x => x.Id).ToArray();
+
+        await collection.DeleteManyAsync(n => resultIds.Contains(n.Id));
+    }
 }
