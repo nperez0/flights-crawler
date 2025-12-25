@@ -13,6 +13,11 @@ public class FlightQueryNotificationRepository : IFlightQueryNotificationReposit
         collection = database.GetCollection<FlightQueryNotification>("notifications");
     }
 
+    public async Task<FlightQueryNotification[]> GetAllNotificationsAsync()
+        => await collection.Find(_ => true).ToListAsync() is var list
+            ? [.. list]
+            : [];
+
     public async Task<FlightQueryNotification[]> GetByQueryIdsAsync(Guid[] queryIds)
     {
         if (queryIds.Length == 0)
@@ -28,4 +33,11 @@ public class FlightQueryNotificationRepository : IFlightQueryNotificationReposit
             n => n.Id == notification.Id,
             notification,
             new ReplaceOptions { IsUpsert = true });
+
+    public async Task DeleteNotificationsAsync(FlightQueryNotification[] notifications)
+    {
+        var notificationIds = notifications.Select(x => x.Id).ToArray();
+
+        await collection.DeleteManyAsync(n => notificationIds.Contains(n.Id));
+    }
 }
