@@ -27,27 +27,7 @@ public class TelegramBroadcaster(IOptions<TelegramOptions> options) : IBroadcast
         }
     }
 
-    private string BuildMessage(BestPrice bestPrice)
-        => bestPrice.Query.Type switch
-        {
-            FlightQueryType.RoundTrip => BuildRoundTripMessage(bestPrice),
-            FlightQueryType.MultiCity => BuildMultiCityMessage(bestPrice),
-            _ => string.Empty,
-        };
-
-    private static string BuildRoundTripMessage(BestPrice bestPrice)
-    {
-        var message = new StringBuilder();
-        var segmentMessages = BuildSegmentMessages(bestPrice);
-
-        message.AppendJoin(Environment.NewLine, segmentMessages);
-        message.AppendLine();
-        message.Append($"{bestPrice.Price:F2}");
-
-        return message.ToString();
-    }
-
-    private static string BuildMultiCityMessage(BestPrice bestPrice)
+    public static string BuildMessage(BestPrice bestPrice)
     {
         var message = new StringBuilder();
         var segmentMessages = BuildSegmentMessages(bestPrice);
@@ -64,19 +44,17 @@ public class TelegramBroadcaster(IOptions<TelegramOptions> options) : IBroadcast
         var slices = bestPrice.BestResult.Solutions.First().Slices;
 
         return bestPrice.Query.Segments
-            .Select(BuildSegmentMessage(bestPrice.BestResult, slices));
+            .Select(BuildSegmentMessage(slices));
     }
 
-    private static Func<FlightQuerySegment, int, string> BuildSegmentMessage(FlightQueryResult result, FlightSlice[] slices)
-        => (segment, index) => BuildSegmentMessage(segment, result, slices[index].DurationMinutes);
+    private static Func<FlightQuerySegment, int, string> BuildSegmentMessage(FlightSlice[] slices)
+        => (segment, index) => BuildSegmentMessage(segment, slices[index]);
 
-    private static string BuildSegmentMessage(FlightQuerySegment segment, FlightQueryResult result, int durationMinutes)
+    private static string BuildSegmentMessage(FlightQuerySegment segment, FlightSlice slice)
     {
-        var duration = TimeSpan.FromMinutes(durationMinutes);
+        var duration = TimeSpan.FromMinutes(slice.DurationMinutes);
         var formattedDuration = $"{(int)duration.TotalHours:00}h {duration.Minutes:00}m";
 
-        return segment.End.HasValue 
-            ? $"{segment.Origin.Code} -> {segment.Destination.Code} - {segment.Start:yyyy-MM-dd} - {segment.End:yyyy-MM-dd} ({formattedDuration})"
-            : $"{segment.Origin.Code} -> {segment.Destination.Code} - {segment.Start:yyyy-MM-dd} ({formattedDuration})";
+        return $"{segment.Origin.Code} -> {segment.Destination.Code} - {slice.DepartureTime:yyyy-MM-dd} ({formattedDuration})";
     }
 }
