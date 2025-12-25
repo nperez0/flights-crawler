@@ -13,7 +13,7 @@ public static class Configuration
         services.Configure<TelegramOptions>(configuration.GetSection(TelegramOptions.SectionName));
 
         services.AddTransient<IBroadcaster, TelegramBroadcaster>();
-        services.AddTransient<IFlightsNotifier, FlightsNotifier>();
+        services.AddTransient<IFlightsNotifierJob, FlightsNotifierJob>();
 
         services.RegisterDatabaseComponents();
 

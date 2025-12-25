@@ -5,15 +5,15 @@ using Flights.Notifier.Job.Pricing;
 
 namespace Flights.Notifier.Job;
 
-public class FlightsNotifier(
+public class FlightsNotifierJob(
     IFlightQueryRepository flightQueryRepository,
     IFlightQueryResultRepository flightQueryResultRepository,
     IFlightQueryNotificationRepository flightQueryNotificationRepository,
-    IEnumerable<IBroadcaster> broadcasters) : IFlightsNotifier
+    IEnumerable<IBroadcaster> broadcasters) : IFlightsNotifierJob
 {
     private IBroadcaster[] broadcasters = [.. broadcasters];
 
-    public async Task NotifyAsync()
+    public async Task ExecuteAsync()
     {
         var queries = await flightQueryRepository.GetEnabledQueriesAsync();
         var queryIds = queries.Select(q => q.Id).ToArray();

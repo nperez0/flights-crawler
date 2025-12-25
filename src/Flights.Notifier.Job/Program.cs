@@ -12,6 +12,6 @@ var services = new ServiceCollection()
     .RegisterComponents(configuration)
     .BuildServiceProvider();
 
-var notifier = services.GetRequiredService<IFlightsNotifier>();
+var job = services.GetRequiredService<IFlightsNotifierJob>();
 
-await notifier.NotifyAsync();
+await job.ExecuteAsync();
