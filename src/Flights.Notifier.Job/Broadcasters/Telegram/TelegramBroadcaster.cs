@@ -32,6 +32,7 @@ public class TelegramBroadcaster(IOptions<TelegramOptions> options) : IBroadcast
         var message = new StringBuilder();
         var segmentMessages = BuildSegmentMessages(bestPrice);
 
+        message.AppendLine(bestPrice.BestResult.Provider);
         message.AppendJoin(Environment.NewLine, segmentMessages);
         message.AppendLine();
         message.Append($"{bestPrice.Price:F2}");
