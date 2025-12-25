@@ -11,9 +11,9 @@ public class RoundTripFormFiller(IPage page, FlightQuery query) : IFormFiller
 
         await page.SelectOriginAsync(flight.Origin.City, flight.Origin.Country);
         await page.SelectDestinationAsync(flight.Destination.City, flight.Destination.Country);
-        await page.SelectDateRange(flight.Start, flight.End!.Value);
+        await page.SelectDateRangeAsync(flight.Start, flight.End!.Value);
 
-        await page.SelectDaysAsync(flight.Days, FlightQueryDays.ThisDayOnly);
-        await page.SelectDaysAsync(flight.Days, FlightQueryDays.ThisDayOnly);
+        await page.SelectDaysAsync(flight.Days);
+        await page.SelectDaysAsync(flight.Days);
     }
 }

@@ -15,7 +15,7 @@ public class ItaFlightsCrawler(
     {
         var results = new List<FlightQueryResult>();
 
-        foreach (var flightQuery in flightQueries)
+        foreach (var flightQuery in flightQueries.Where(x => x.Type == FlightQueryType.OneWay))
         {
             var resul = await ExecuteQuery(flightQuery);
 

@@ -15,7 +15,7 @@ public class MultiCityFormFiller(IPage page, FlightQuery query) : IFormFiller
 
             await page.SelectOriginAsync(flight.Origin.City, flight.Origin.Country, i);
             await page.SelectDestinationAsync(flight.Destination.City, flight.Destination.Country, i);
-            await page.SelectDate(flight.Start, i);
+            await page.SelectDateAsync(flight.Start, i);
 
             await page.SelectDaysAsync(flight.Days, i == 0 ? FlightQueryDays.ThisDayOnly : query.Segments[i - 1].Days, i);
 

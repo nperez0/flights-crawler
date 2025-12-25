@@ -6,6 +6,13 @@ namespace Flights.Crawler.Ita.Form;
 
 public static class FormActions
 {
+    public static async Task SelectOneWaySearchAsync(this IPage page)
+    {
+        var selOneWayButton = page.GetByRole(AriaRole.Tab, new() { Name = "One Way" });
+
+        await selOneWayButton.ClickAsync();
+    }
+
     public static async Task SelectMultiCitySearchAsync(this IPage page)
     {
         var selMultiCityButton = page.GetByRole(AriaRole.Tab, new() { Name = "Multi City" });
@@ -41,7 +48,7 @@ public static class FormActions
         await selDestinationCity.Select(0).ClickAsync();
     }
 
-    public static async Task SelectDate(this IPage page, DateOnly date, int position)
+    public static async Task SelectDateAsync(this IPage page, DateOnly date, int position = 0)
     {
         var selDateFlight = page.Locator("input[matinput][required].mat-datepicker-input");
 
@@ -50,7 +57,7 @@ public static class FormActions
             .FillAsync(date.ToString("MM/dd/yyyy"));
     }
 
-    public static async Task SelectDateRange(this IPage page, DateOnly start, DateOnly end)
+    public static async Task SelectDateRangeAsync(this IPage page, DateOnly start, DateOnly end)
     {
         var startInput = page.Locator("mat-date-range-input input[matstartdate]");
         var endInput = page.Locator("mat-date-range-input input[matenddate]");
@@ -59,7 +66,7 @@ public static class FormActions
         await endInput.FillAsync(end.ToString("MM/dd/yyyy"));
     }
 
-    public static async Task SelectDaysAsync(this IPage page, FlightQueryDays searchDays, FlightQueryDays previousSearchDays, int position = 0)
+    public static async Task SelectDaysAsync(this IPage page, FlightQueryDays searchDays, FlightQueryDays previousSearchDays = FlightQueryDays.ThisDayOnly, int position = 0)
     {
         var selDays = page.GetByRole(AriaRole.Combobox, new() { Name = GetOptionName(previousSearchDays) });
         var selDaysOption = page.Locator($"mat-option:has-text('{GetOptionName(searchDays)}')");
