@@ -1,6 +1,5 @@
 ﻿using Flights.Crawler.Ita.Form;
 using Flights.Crawler.Ita.Form.FormFillers;
-using Flights.Data.Mapping;
 using Flights.Data.Models.Query;
 using Flights.Data.Models.Result;
 

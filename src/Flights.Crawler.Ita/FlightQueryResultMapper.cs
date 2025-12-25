@@ -1,8 +1,8 @@
-using Flights.Data.Models.Response;
+using Flights.Crawler.Ita.Response;
 using Flights.Data.Models.Result;
 using Location = Flights.Data.Models.Result.Location;
 
-namespace Flights.Data.Mapping;
+namespace Flights.Crawler.Ita;
 
 public static class FlightQueryResultMapper
 {
@@ -12,13 +12,14 @@ public static class FlightQueryResultMapper
     {
         var solutions = response.SolutionList?.Solutions?
             .Take(TopSolutionCount)
-            .Select(MapSolution)
+            .Select(s => MapSolution(s))
             .ToArray() ?? [];
 
         return new FlightQueryResult
         {
             Id = Guid.NewGuid(),
             QueryId = queryId,
+            Provider = "ITA Matrix",
             Solutions = solutions,
             TotalSolutionCount = response.SolutionCount,
             SearchedAt = DateTime.UtcNow
@@ -28,7 +29,7 @@ public static class FlightQueryResultMapper
     private static FlightSolution MapSolution(Solution solution)
     {
         var slices = solution.Itinerary?.Slices?
-            .Select(MapSlice)
+            .Select(s => MapSlice(s))
             .ToArray() ?? [];
 
         return new FlightSolution
@@ -73,13 +74,13 @@ public static class FlightQueryResultMapper
 
     public static double ParsePrice(string? price)
     {
-        if (price.IsNullOrWhiteSpace())
+        if (string.IsNullOrWhiteSpace(price ?? string.Empty))
             return 0d;
 
         if (double.TryParse(price, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var value))
             return value;
 
-        var cleaned = new string(price.Where(c => char.IsDigit(c) || c == '.' || c == ',').ToArray());
+        var cleaned = new string(price!.Where(c => char.IsDigit(c) || c == '.' || c == ',').ToArray());
         cleaned = cleaned.Replace(',', '.');
 
         return double.TryParse(cleaned, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out value)

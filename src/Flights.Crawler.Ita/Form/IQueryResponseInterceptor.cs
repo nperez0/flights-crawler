@@ -1,4 +1,4 @@
-﻿using Flights.Data.Models.Response;
+﻿using Flights.Crawler.Ita.Response;
 
 namespace Flights.Crawler.Ita.Form;
 

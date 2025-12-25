@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace Flights.Data.Models.Response;
+namespace Flights.Crawler.Ita.Response;
 
 public static class ResponseParser
 {

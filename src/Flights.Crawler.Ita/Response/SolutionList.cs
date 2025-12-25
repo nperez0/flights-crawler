@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Flights.Data.Models.Response;
+namespace Flights.Crawler.Ita.Response;
 
 public class SolutionList
 {

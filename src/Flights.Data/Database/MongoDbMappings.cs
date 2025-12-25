@@ -83,6 +83,8 @@ public static class MongoDbMappings
             cm.MapProperty(x => x.QueryId)
                 .SetElementName("queryId")
                 .SetSerializer(new GuidSerializer(BsonType.String));
+            cm.MapProperty(x => x.Provider)
+                .SetElementName("provider");
             cm.MapProperty(x => x.Solutions)
                 .SetElementName("solutions");
             cm.MapProperty(x => x.TotalSolutionCount)

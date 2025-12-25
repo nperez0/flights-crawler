@@ -8,6 +8,8 @@ public class FlightQueryResult
 
     public required Guid QueryId { get; set; }
 
+    public required string Provider { get; set; }
+
     public required FlightSolution[] Solutions { get; set; }
 
     public int TotalSolutionCount { get; set; }

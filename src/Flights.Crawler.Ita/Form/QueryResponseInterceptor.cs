@@ -1,4 +1,4 @@
-﻿using Flights.Data.Models.Response;
+﻿using Flights.Crawler.Ita.Response;
 using Microsoft.Playwright;
 
 namespace Flights.Crawler.Ita.Form;
@@ -17,12 +17,17 @@ public class QueryResponseInterceptor(IPage page) : IQueryResponseInterceptor
             new() { Timeout = 60000 });
     }
 
-    public async Task<FlightQueryResponse> GetFlightQueryResponseAsync()
+    public Task<FlightQueryResponse> GetFlightQueryResponseAsync()
     {
         if (responseTask == null)
-            return FlightQueryResponse.Empty;
+            return Task.FromResult(FlightQueryResponse.Empty);
 
-        var response = await responseTask;
+        return GetResponseInternalAsync();
+    }
+
+    private async Task<FlightQueryResponse> GetResponseInternalAsync()
+    {
+        var response = await responseTask!;
         var responseBodyText = await response.TextAsync();
 
         return ResponseParser.ParseResponse(responseBodyText);
