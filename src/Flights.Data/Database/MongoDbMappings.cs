@@ -1,5 +1,6 @@
 using Flights.Data.Models.Notification;
 using Flights.Data.Models.Query;
+using Flights.Data.Models.Reference;
 using Flights.Data.Models.Result;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -19,6 +20,7 @@ public static class MongoDbMappings
         ConfigureFlightSlice();
         ConfigureResultLocation();
         ConfigureFlightQueryNotification();
+        ConfigureAirport();
     }
 
     private static void ConfigureFlightQuery()
@@ -167,6 +169,24 @@ public static class MongoDbMappings
             cm.MapProperty(x => x.LastNotifiedAt)
                 .SetElementName("lastNotifiedAt")
                 .SetSerializer(new DateTimeSerializer(DateTimeKind.Utc));
+        });
+    }
+
+    private static void ConfigureAirport()
+    {
+        BsonClassMap.RegisterClassMap<Airport>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapIdProperty(x => x.Id)
+                .SetSerializer(new GuidSerializer(BsonType.String));
+            cm.MapProperty(x => x.Code)
+                .SetElementName("code");
+            cm.MapProperty(x => x.Name)
+                .SetElementName("name");
+            cm.MapProperty(x => x.City)
+                .SetElementName("city");
+            cm.MapProperty(x => x.Country)
+                .SetElementName("country");
         });
     }
 }
