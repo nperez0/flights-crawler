@@ -31,10 +31,18 @@ public class FlightQueryResultRepository : IFlightQueryResultRepository
             : [];
 
     public async Task SaveAsync(FlightQueryResult[] results)
-        => await collection.InsertManyAsync(results);
+    {
+        if (results.Length == 0) 
+            return;
+
+        await collection.InsertManyAsync(results);
+    }
 
     public async Task DeleteResultsAsync(FlightQueryResult[] results)
     {
+        if (results.Length == 0)
+            return;
+
         var resultIds = results.Select(x => x.Id).ToArray();
 
         await collection.DeleteManyAsync(n => resultIds.Contains(n.Id));

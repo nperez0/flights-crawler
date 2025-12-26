@@ -36,6 +36,9 @@ public class FlightQueryNotificationRepository : IFlightQueryNotificationReposit
 
     public async Task DeleteNotificationsAsync(FlightQueryNotification[] notifications)
     {
+        if (notifications.Length == 0) 
+            return;
+
         var notificationIds = notifications.Select(x => x.Id).ToArray();
 
         await collection.DeleteManyAsync(n => notificationIds.Contains(n.Id));
