@@ -10,6 +10,8 @@ public static class Configuration
     {
         services.RegisterDatabaseComponents();
 
+        services.AddSingleton<ICleanerJob, CleanerJob>();
+
         services.AddTransient<ICleaner, NotificationsCleaner>();
         services.AddTransient<ICleaner, OldQueryResultsCleaner>();
 

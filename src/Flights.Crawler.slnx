@@ -1,10 +1,18 @@
 <Solution>
-  <Project Path="Flights.Cleaner.Job/Flights.Cleaner.Job.csproj" Id="4d8a9d41-c350-464d-b682-68731aeb2b0e" />
-  <Project Path="Flights.Core.Job/Flights.Core.Job.csproj" Id="995e5664-263f-446e-8401-870bab273363" />
-  <Project Path="Flights.Core/Flights.Core.csproj" Id="592305de-7952-4888-92c6-61aaff00a41a" />
-  <Project Path="Flights.Crawler.Ita/Flights.Crawler.Ita.csproj" Id="fee32493-dfce-4543-9ab9-f609b8a7ad64" />
-  <Project Path="Flights.Crawler.Job/Flights.Crawler.Job.csproj" />
-  <Project Path="Flights.Crawler/Flights.Crawler.csproj" Id="611cbeea-6750-4612-8610-ac00fd678599" />
-  <Project Path="Flights.Data/Flights.Data.csproj" Id="8cd0907c-2160-4df2-956e-bc05d3e96554" />
-  <Project Path="Flights.Notifier.Job/Flights.Notifier.Job.csproj" />
+  <Folder Name="/Core/">
+    <Project Path="Flights.Core.Job/Flights.Core.Job.csproj" Id="995e5664-263f-446e-8401-870bab273363" />
+    <Project Path="Flights.Core/Flights.Core.csproj" Id="592305de-7952-4888-92c6-61aaff00a41a" />
+  </Folder>
+  <Folder Name="/Crawlers/">
+    <Project Path="Flights.Cleaner.Job/Flights.Cleaner.Job.csproj" Id="4d8a9d41-c350-464d-b682-68731aeb2b0e" />
+    <Project Path="Flights.Crawler.Ita/Flights.Crawler.Ita.csproj" Id="fee32493-dfce-4543-9ab9-f609b8a7ad64" />
+    <Project Path="Flights.Crawler.Job/Flights.Crawler.Job.csproj" />
+    <Project Path="Flights.Crawler/Flights.Crawler.csproj" Id="611cbeea-6750-4612-8610-ac00fd678599" />
+  </Folder>
+  <Folder Name="/Data/">
+    <Project Path="Flights.Data/Flights.Data.csproj" Id="8cd0907c-2160-4df2-956e-bc05d3e96554" />
+  </Folder>
+  <Folder Name="/Notifications/">
+    <Project Path="Flights.Notifier.Job/Flights.Notifier.Job.csproj" />
+  </Folder>
 </Solution>
