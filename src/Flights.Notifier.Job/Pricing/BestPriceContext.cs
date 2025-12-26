@@ -4,7 +4,7 @@ using Flights.Data.Models.Result;
 
 namespace Flights.Notifier.Job.Pricing;
 
-public class BestPriceContext(FlightQuery[] queries, FlightQueryResult[] results, FlightQueryNotification[] notifications)
+public class BestPriceContext(FlightQuery[] queries, FlightQueryResult[] results, FlightQueryPriceDropNotification[] notifications)
 {
     public FlightQuery[] Queries { get; } = queries;
 
@@ -12,7 +12,7 @@ public class BestPriceContext(FlightQuery[] queries, FlightQueryResult[] results
         .GroupBy(r => r.QueryId)
         .ToDictionary(g => g.Key, g => g.Last());
 
-    public Dictionary<Guid, FlightQueryNotification> Notifications { get; } = notifications.ToDictionary(n => n.QueryId);
+    public Dictionary<Guid, FlightQueryPriceDropNotification> Notifications { get; } = notifications.ToDictionary(n => n.QueryId);
 
     public List<BestPrice> BestPrices { get; } = new();
 }

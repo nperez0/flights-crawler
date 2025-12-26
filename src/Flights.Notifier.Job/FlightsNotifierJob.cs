@@ -17,8 +17,8 @@ public class FlightsNotifierJob(
     {
         var queries = await flightQueryRepository.GetEnabledQueriesAsync();
         var queryIds = queries.Select(q => q.Id).ToArray();
-        var results = await flightQueryResultRepository.GetByQueryIdsAsync(queryIds);
-        var notifications = await flightQueryNotificationRepository.GetByQueryIdsAsync(queryIds);
+        var results = await flightQueryResultRepository.GetResultsByQueryIdsAsync(queryIds);
+        var notifications = await flightQueryNotificationRepository.GetPriceDropNotificationsByQueryIdsAsync(queryIds);
         var context = new BestPriceContext(queries, results, notifications);
 
         BestPriceDetector.Evaluate(context);
@@ -38,13 +38,13 @@ public class FlightsNotifierJob(
     private Task PersistNotifications(BestPriceContext context)
     {
         var saveTasks = context.BestPrices
-            .Select(x => new FlightQueryNotification
+            .Select(x => new FlightQueryPriceDropNotification
             {
                 Id = x.PreviousNotification?.Id ?? Guid.NewGuid(),
                 QueryId = x.Query.Id,
-                LastNotifiedPrice = x.Price,
-                LastResultId = x.BestResult.Id,
-                LastNotifiedAt = DateTime.UtcNow
+                NotifiedPrice = x.Price,
+                ResultId = x.BestResult.Id,
+                NotifiedAt = DateTime.UtcNow
             })
             .Select(flightQueryNotificationRepository.SaveAsync);
 

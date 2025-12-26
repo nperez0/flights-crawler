@@ -9,9 +9,8 @@ public class AirportRepository : IAirportRepository
 
     private readonly IMongoCollection<Airport> collection;
 
-    public AirportRepository(IMongoClient client)
+    public AirportRepository(IMongoDatabase database)
     {
-        var database = client.GetDatabase("flights");
         collection = database.GetCollection<Airport>("airports");
     }
 

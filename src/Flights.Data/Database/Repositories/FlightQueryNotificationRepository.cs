@@ -7,23 +7,24 @@ public class FlightQueryNotificationRepository : IFlightQueryNotificationReposit
 {
     private readonly IMongoCollection<FlightQueryNotification> collection;
 
-    public FlightQueryNotificationRepository(IMongoClient client)
+    public FlightQueryNotificationRepository(IMongoDatabase database)
     {
-        var database = client.GetDatabase("flights");
         collection = database.GetCollection<FlightQueryNotification>("notifications");
     }
 
-    public async Task<FlightQueryNotification[]> GetAllNotificationsAsync()
-        => await collection.Find(_ => true).ToListAsync() is var list
+    public async Task<FlightQueryPriceDropNotification[]> GetAllPriceDropNotificationsAsync()
+        => await collection.OfType<FlightQueryPriceDropNotification>().Find(_ => true).ToListAsync() is var list
             ? [.. list]
             : [];
 
-    public async Task<FlightQueryNotification[]> GetByQueryIdsAsync(Guid[] queryIds)
+    public async Task<FlightQueryPriceDropNotification[]> GetPriceDropNotificationsByQueryIdsAsync(Guid[] queryIds)
     {
         if (queryIds.Length == 0)
             return [];
 
-        return await collection.Find(n => queryIds.Contains(n.QueryId)).ToListAsync() is var list
+        return await collection
+            .OfType<FlightQueryPriceDropNotification>()
+            .Find(n => queryIds.Contains(n.QueryId)).ToListAsync() is var list
             ? [.. list]
             : [];
     }

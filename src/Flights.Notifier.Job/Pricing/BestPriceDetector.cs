@@ -28,7 +28,7 @@ public static class BestPriceDetector
         context.Notifications.TryGetValue(query.Id, out var previousNotification);
 
         var previousPrice = previousNotification != null
-            ? previousNotification.LastNotifiedPrice
+            ? previousNotification.NotifiedPrice
             : (double?)null;
 
         if (previousPrice.HasValue && bestPrice >= previousPrice.Value)

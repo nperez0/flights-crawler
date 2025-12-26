@@ -4,8 +4,8 @@ namespace Flights.Data.Database.Repositories;
 
 public interface IFlightQueryNotificationRepository
 {
-    Task<FlightQueryNotification[]> GetByQueryIdsAsync(Guid[] queryIds);
-    Task<FlightQueryNotification[]> GetAllNotificationsAsync();
+    Task<FlightQueryPriceDropNotification[]> GetPriceDropNotificationsByQueryIdsAsync(Guid[] queryIds);
+    Task<FlightQueryPriceDropNotification[]> GetAllPriceDropNotificationsAsync();
     Task SaveAsync(FlightQueryNotification notification);
     Task DeleteNotificationsAsync(FlightQueryNotification[] notifications);
 }

@@ -19,7 +19,12 @@ public static class MongoDbMappings
         ConfigureFlightSolution();
         ConfigureFlightSlice();
         ConfigureResultLocation();
+        ConfigureFlightQueryAlarm();
+        ConfigureFlightQueryPriceDropAlarm();
         ConfigureFlightQueryNotification();
+        ConfigureFlightQueryPriceDropNotification();
+        ConfigureAlarmTarget();
+        ConfigureTelegramAlarmTarget();
         ConfigureAirport();
     }
 
@@ -151,24 +156,58 @@ public static class MongoDbMappings
         });
     }
 
-    private static void ConfigureFlightQueryNotification()
+    private static void ConfigureFlightQueryAlarm()
     {
-        BsonClassMap.RegisterClassMap<FlightQueryNotification>(cm =>
+        BsonClassMap.RegisterClassMap<FlightQueryAlarm>(cm =>
         {
             cm.AutoMap();
+            cm.SetIsRootClass(true);
+            cm.SetDiscriminator("alarm");
             cm.MapIdProperty(x => x.Id)
                 .SetSerializer(new GuidSerializer(BsonType.String));
             cm.MapProperty(x => x.QueryId)
                 .SetElementName("queryId")
                 .SetSerializer(new GuidSerializer(BsonType.String));
-            cm.MapProperty(x => x.LastNotifiedPrice)
-                .SetElementName("lastNotifiedPrice");
-            cm.MapProperty(x => x.LastResultId)
-                .SetElementName("lastResultId")
+        });
+    }
+
+    private static void ConfigureFlightQueryPriceDropAlarm()
+    {
+        BsonClassMap.RegisterClassMap<FlightQueryPriceDropAlarm>(cm =>
+        {
+            cm.AutoMap();
+            cm.SetDiscriminator("priceDrop");
+        });
+    }
+
+    private static void ConfigureFlightQueryNotification()
+    {
+        BsonClassMap.RegisterClassMap<FlightQueryNotification>(cm =>
+        {
+            cm.AutoMap();
+            cm.SetDiscriminator("notification");
+            cm.MapIdProperty(x => x.Id)
                 .SetSerializer(new GuidSerializer(BsonType.String));
-            cm.MapProperty(x => x.LastNotifiedAt)
-                .SetElementName("lastNotifiedAt")
+            cm.MapProperty(x => x.QueryId)
+                .SetElementName("queryId")
+                .SetSerializer(new GuidSerializer(BsonType.String));
+            cm.MapProperty(x => x.ResultId)
+                .SetElementName("resultId")
+                .SetSerializer(new GuidSerializer(BsonType.String));
+            cm.MapProperty(x => x.NotifiedAt)
+                .SetElementName("notifiedAt")
                 .SetSerializer(new DateTimeSerializer(DateTimeKind.Utc));
+        });
+    }
+
+    private static void ConfigureFlightQueryPriceDropNotification()
+    {
+        BsonClassMap.RegisterClassMap<FlightQueryPriceDropNotification>(cm =>
+        {
+            cm.AutoMap();
+            cm.SetDiscriminator("priceDrop");
+            cm.MapProperty(x => x.NotifiedPrice)
+                .SetElementName("notifiedPrice");
         });
     }
 
@@ -187,6 +226,26 @@ public static class MongoDbMappings
                 .SetElementName("city");
             cm.MapProperty(x => x.Country)
                 .SetElementName("country");
+        });
+    }
+
+    private static void ConfigureAlarmTarget()
+    {
+        BsonClassMap.RegisterClassMap<AlarmTarget>(cm =>
+        {
+            cm.AutoMap();
+            cm.SetDiscriminator("target");
+        });
+    }
+
+    private static void ConfigureTelegramAlarmTarget()
+    {
+        BsonClassMap.RegisterClassMap<TelegramAlarmTarget>(cm =>
+        {
+            cm.AutoMap();
+            cm.SetDiscriminator("telegram");
+            cm.MapProperty(x => x.ChatId)
+                .SetElementName("chatId");
         });
     }
 }

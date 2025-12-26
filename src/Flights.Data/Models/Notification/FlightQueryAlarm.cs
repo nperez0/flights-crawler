@@ -1,9 +1,8 @@
 ﻿namespace Flights.Data.Models.Notification;
 
-public abstract class FlightQueryNotification
+public abstract class FlightQueryAlarm
 {
     public required Guid Id { get; set; }
     public required Guid QueryId { get; set; }
-    public required Guid ResultId { get; set; }
-    public DateTime NotifiedAt { get; set; }
+    public required AlarmTarget[] Targets { get; set; }
 }

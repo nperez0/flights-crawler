@@ -16,5 +16,6 @@
   </Folder>
   <Folder Name="/Notifications/">
     <Project Path="Flights.Notifier.Job/Flights.Notifier.Job.csproj" />
+    <Project Path="Flights.Notifier/Flights.Notifier.csproj" Id="c8a4304e-a68d-4592-8b4b-f195421b9329" />
   </Folder>
 </Solution>

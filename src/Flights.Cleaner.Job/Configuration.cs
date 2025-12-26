@@ -12,7 +12,7 @@ public static class Configuration
 
         services.AddSingleton<ICleanerJob, CleanerJob>();
 
-        services.AddTransient<ICleaner, NotificationsCleaner>();
+        services.AddTransient<ICleaner, PriceDropNotificationsCleaner>();
         services.AddTransient<ICleaner, OldQueryResultsCleaner>();
 
         return services;

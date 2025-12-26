@@ -7,13 +7,12 @@ public class FlightQueryResultRepository : IFlightQueryResultRepository
 {
     private readonly IMongoCollection<FlightQueryResult> collection;
 
-    public FlightQueryResultRepository(IMongoClient client)
+    public FlightQueryResultRepository(IMongoDatabase database)
     {
-        var database = client.GetDatabase("flights");
         collection = database.GetCollection<FlightQueryResult>("results");
     }
 
-    public async Task<FlightQueryResult[]> GetByQueryIdsAsync(Guid[] queryIds)
+    public async Task<FlightQueryResult[]> GetResultsByQueryIdsAsync(Guid[] queryIds)
     {
         if (queryIds.Length == 0)
             return [];

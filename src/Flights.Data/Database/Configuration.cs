@@ -13,8 +13,9 @@ public static class Configuration
         var connectionString = Environment.GetEnvironmentVariable("MONGO_CONNECTION_STRING");
         var settings = MongoClientSettings.FromConnectionString(connectionString);
         var client = new MongoClient(settings);
+        var database = client.GetDatabase("flights");
 
-        services.AddSingleton<IMongoClient>(client);
+        services.AddSingleton(database);
 
         services.RegisterRepositories();
 
@@ -25,6 +26,7 @@ public static class Configuration
     {
         services.AddTransient<IFlightQueryRepository, FlightQueryRepository>();
         services.AddTransient<IFlightQueryResultRepository, FlightQueryResultRepository>();
+        services.AddTransient<IFlightQueryAlarmRepository, FlightQueryAlarmRepository>();
         services.AddTransient<IFlightQueryNotificationRepository, FlightQueryNotificationRepository>();
         services.AddTransient<IAirportRepository, AirportRepository>();
 
