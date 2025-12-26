@@ -11,11 +11,13 @@ public class ItaFlightsCrawler(
     IFormFillerFactory formFillerFactory) 
     : IFlightsCrawler
 {
+    public string Name => "Ita Matrix Crawler";
+
     public async Task<FlightQueryResult[]> ExecuteQueriesAsync(FlightQuery[] flightQueries)
     {
         var results = new List<FlightQueryResult>();
 
-        foreach (var flightQuery in flightQueries.Where(x => x.Type == FlightQueryType.OneWay))
+        foreach (var flightQuery in flightQueries)
         {
             var resul = await ExecuteQuery(flightQuery);
 

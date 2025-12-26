@@ -5,5 +5,7 @@ namespace Flights.Crawler;
 
 public interface IFlightsCrawler
 {
+    string Name { get; }
+
     Task<FlightQueryResult[]> ExecuteQueriesAsync(FlightQuery[] flightQueries);
 }

@@ -1,4 +1,5 @@
-﻿using Flights.Crawler.Ita;
+﻿using Flights.Core.Job;
+using Flights.Crawler.Ita;
 using Flights.Data.Database;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -8,6 +9,7 @@ public static class Configuration
 {
     public static IServiceCollection RegisterComponents(this IServiceCollection services)
     {
+        services.ConfigureLogging();
         services.RegisterDatabaseComponents();
 
         services.AddSingleton<IFlightsCrawlRunner, FlightsCrawlRunner>();
