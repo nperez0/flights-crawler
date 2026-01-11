@@ -89,6 +89,17 @@ public static class FormActions
         await selRemoveCity.Select(currentSegment + 1).ClickAsync();
     }
 
+    public static async Task SelectCurrencyAsync(this IPage page, string currency)
+    {
+        var selCurrency = page.Locator("input[formcontrolname=\"currency\"]");
+        var selCurrencyOption = page.Locator($"mat-option:has-text('{currency}')");
+
+        await selCurrency.FillAsync(currency);
+
+        await selCurrencyOption.WaitForAsync(new LocatorWaitForOptions { State = WaitForSelectorState.Visible });
+        await selCurrencyOption.ClickAsync();
+    }
+
     public static Task SubmitFormAsync(this IPage page) 
         => page.GetByRole(AriaRole.Button, new() { Name = "Search" }).ClickAsync();
 

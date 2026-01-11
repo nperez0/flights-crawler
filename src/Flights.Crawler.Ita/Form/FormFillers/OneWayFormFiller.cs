@@ -16,5 +16,7 @@ public class OneWayFormFiller(IPage page, FlightQuery query) : IFormFiller
         await page.SelectDateAsync(flight.Start);
 
         await page.SelectDaysAsync(flight.Days);
+
+        await page.SelectCurrencyAsync("EUR");
     }
 }

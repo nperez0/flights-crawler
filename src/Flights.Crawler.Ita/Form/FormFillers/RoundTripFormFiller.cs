@@ -15,5 +15,7 @@ public class RoundTripFormFiller(IPage page, FlightQuery query) : IFormFiller
 
         await page.SelectDaysAsync(flight.Days);
         await page.SelectDaysAsync(flight.Days);
+
+        await page.SelectCurrencyAsync("EUR");
     }
 }
