@@ -2,5 +2,5 @@
 
 public interface IFlightsNotifierJob
 {
-    Task ExecuteAsync();
+    ValueTask ExecuteAsync();
 }

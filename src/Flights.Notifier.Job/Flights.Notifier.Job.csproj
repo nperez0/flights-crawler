@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Flights.Core\Flights.Core.csproj" />
     <ProjectReference Include="..\Flights.Data\Flights.Data.csproj" />
+    <ProjectReference Include="..\Flights.Notifier\Flights.Notifier.csproj" />
   </ItemGroup>
 
   <ItemGroup>

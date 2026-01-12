@@ -1,6 +1,5 @@
 ﻿using Flights.Notifier.PriceDrop;
 using Flights.Notifier.Senders;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Telegram.Bot;
 
@@ -15,14 +14,16 @@ public static class Configuration
 
         services.AddTransient<IAlertTrigger, PriceDropAlertTrigger>();
 
+        services.RegisterTelegram();
+
         return services;
     }
 
-    public static IServiceCollection RegisterTelegram(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterTelegram(this IServiceCollection services)
     {
         var token = Environment.GetEnvironmentVariable("TELEGRAM_BOT_TOKEN");
 
-        services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(token));
+        services.AddSingleton<ITelegramBotClient>(new TelegramBotClient(token!));
 
         return services;
     }

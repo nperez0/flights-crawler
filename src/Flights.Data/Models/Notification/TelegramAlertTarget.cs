@@ -1,6 +1,6 @@
 ﻿namespace Flights.Data.Models.Notification;
 
-public class TelegramAlarmTarget : AlertTarget
+public class TelegramAlertTarget : AlertTarget
 {
     public override AlertTargetType Type => AlertTargetType.Telegram;
 

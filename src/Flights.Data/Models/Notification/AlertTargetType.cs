@@ -1,6 +1,6 @@
 ﻿namespace Flights.Data.Models.Notification;
 
-public enum AlarmTargetType
+public enum AlertTargetType
 {
     Telegram
 }

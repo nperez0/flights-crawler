@@ -1,6 +1,6 @@
 ﻿namespace Flights.Notifier;
 
-public interface IAlarmTrigger
+public interface IAlertTrigger
 {
     Task TriggerAsync();
 }

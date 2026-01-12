@@ -168,6 +168,8 @@ public static class MongoDbMappings
             cm.MapProperty(x => x.QueryId)
                 .SetElementName("queryId")
                 .SetSerializer(new GuidSerializer(BsonType.String));
+            cm.MapProperty(x => x.Targets)
+                .SetElementName("targets");
         });
     }
 
@@ -211,6 +213,26 @@ public static class MongoDbMappings
         });
     }
 
+    private static void ConfigureAlertTarget()
+    {
+        BsonClassMap.RegisterClassMap<AlertTarget>(cm =>
+        {
+            cm.AutoMap();
+            cm.SetDiscriminator("target");
+        });
+    }
+
+    private static void ConfigureTelegramAlertTarget()
+    {
+        BsonClassMap.RegisterClassMap<TelegramAlertTarget>(cm =>
+        {
+            cm.AutoMap();
+            cm.SetDiscriminator("telegram");
+            cm.MapProperty(x => x.ChatId)
+                .SetElementName("chatId");
+        });
+    }
+
     private static void ConfigureAirport()
     {
         BsonClassMap.RegisterClassMap<Airport>(cm =>
@@ -226,26 +248,6 @@ public static class MongoDbMappings
                 .SetElementName("city");
             cm.MapProperty(x => x.Country)
                 .SetElementName("country");
-        });
-    }
-
-    private static void ConfigureAlertTarget()
-    {
-        BsonClassMap.RegisterClassMap<AlertTarget>(cm =>
-        {
-            cm.AutoMap();
-            cm.SetDiscriminator("target");
-        });
-    }
-
-    private static void ConfigureTelegramAlertTarget()
-    {
-        BsonClassMap.RegisterClassMap<TelegramAlarmTarget>(cm =>
-        {
-            cm.AutoMap();
-            cm.SetDiscriminator("telegram");
-            cm.MapProperty(x => x.ChatId)
-                .SetElementName("chatId");
         });
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace Flights.Data.Models.Notification;
 
-public abstract class AlarmTarget
+public abstract class AlertTarget
 {
-    public abstract AlarmTargetType Type { get; }
+    public abstract AlertTargetType Type { get; }
 }

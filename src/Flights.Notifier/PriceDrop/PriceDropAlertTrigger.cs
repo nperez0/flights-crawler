@@ -18,7 +18,7 @@ public class PriceDropAlertTrigger(
     public async Task TriggerAsync()
     {
         var alerts = await flightQueryAlertRepository.GetAllPriceDropAlertsAsync();
-        var queryIds = alerts.Select(q => q.Id).Distinct().ToArray();
+        var queryIds = alerts.Select(q => q.QueryId).Distinct().ToArray();
         var queries = await flightQueryRepository.GetEnabledQueriesByQueryIdsAsync(queryIds);
         queryIds = [.. queries.Select(q => q.Id)];
         var results = await flightQueryResultRepository.GetResultsByQueryIdsAsync(queryIds);
