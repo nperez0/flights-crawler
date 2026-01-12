@@ -2,7 +2,7 @@
 
 public class FlightsNotifierJob(IEnumerable<IAlertTrigger> alertTriggers) : IFlightsNotifierJob
 {
-    public async ValueTask ExecuteAsync()
+    public async Task ExecuteAsync()
     {
         foreach (var trigger in alertTriggers)
             await trigger.TriggerAsync();

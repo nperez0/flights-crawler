@@ -1,13 +1,8 @@
 ﻿using Flights.Notifier.Job;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-var configuration = new ConfigurationBuilder()
-    .AddEnvironmentVariables()
-    .Build();
-
 var services = new ServiceCollection()
-    .RegisterComponents(configuration)
+    .RegisterComponents()
     .BuildServiceProvider();
 
 var job = services.GetRequiredService<IFlightsNotifierJob>();

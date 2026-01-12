@@ -6,7 +6,7 @@ namespace Flights.Notifier.Job;
 
 public static class Configuration
 {
-    public static IServiceCollection RegisterComponents(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection RegisterComponents(this IServiceCollection services)
     {
         services.RegisterDatabaseComponents();
         services.RegisterNotifierComponents();

@@ -179,6 +179,8 @@ public static class MongoDbMappings
         {
             cm.AutoMap();
             cm.SetDiscriminator("priceDrop");
+            cm.MapProperty(x => x.Reset)
+                .SetElementName("reset");
         });
     }
 

@@ -2,7 +2,7 @@
 
 public  class FlightsCrawlerJob(IFlightsCrawlRunner flightsCrawlRunner)
 {
-    public async ValueTask ExecuteAsync()
+    public async Task ExecuteAsync()
     {
         await flightsCrawlRunner.CrawlAsync();
     }
