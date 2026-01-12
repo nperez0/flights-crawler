@@ -25,6 +25,7 @@ public static class MongoDbMappings
         ConfigureFlightQueryPriceDropNotification();
         ConfigureAlertTarget();
         ConfigureTelegramAlertTarget();
+        ConfigureResetAlert();
         ConfigureAirport();
     }
 
@@ -232,6 +233,19 @@ public static class MongoDbMappings
             cm.SetDiscriminator("telegram");
             cm.MapProperty(x => x.ChatId)
                 .SetElementName("chatId");
+        });
+    }
+
+    private static void ConfigureResetAlert()
+    {
+        BsonClassMap.RegisterClassMap<ResetAlert>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapProperty(x => x.Units)
+                .SetElementName("units");
+            cm.MapProperty(x => x.Type)
+                .SetElementName("type")
+                .SetSerializer(new EnumSerializer<ResetAlertType>(BsonType.String));
         });
     }
 
