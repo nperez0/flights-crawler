@@ -5,24 +5,25 @@ using Flights.Data.Models.Query;
 
 namespace Flights.Notifier.PriceDrop;
 
-public class PriceDropAlarmTrigger(
-    IFlightQueryAlarmRepository flightQueryAlarmRepository,
+public class PriceDropAlertTrigger(
+    IFlightQueryAlertRepository flightQueryAlertRepository,
     IFlightQueryRepository flightQueryRepository,
     IFlightQueryResultRepository flightQueryResultRepository,
     IFlightQueryNotificationRepository flightQueryNotificationRepository,
-    IEnumerable<IDroppedPriceSender> droppedPriceSenders) : IAlarmTrigger
+    IEnumerable<IDroppedPriceSender> droppedPriceSenders) 
+    : IAlertTrigger
 {
-    private readonly Dictionary<AlarmTargetType, IDroppedPriceSender> droppedPriceSenders = droppedPriceSenders.ToDictionary(x => x.Type);
+    private readonly Dictionary<AlertTargetType, IDroppedPriceSender> droppedPriceSenders = droppedPriceSenders.ToDictionary(x => x.Type);
 
     public async Task TriggerAsync()
     {
-        var alarms = await flightQueryAlarmRepository.GetAllPriceDropAlarmsAsync();
-        var queryIds = alarms.Select(q => q.Id).Distinct().ToArray();
+        var alerts = await flightQueryAlertRepository.GetAllPriceDropAlertsAsync();
+        var queryIds = alerts.Select(q => q.Id).Distinct().ToArray();
         var queries = await flightQueryRepository.GetEnabledQueriesByQueryIdsAsync(queryIds);
         queryIds = [.. queries.Select(q => q.Id)];
         var results = await flightQueryResultRepository.GetResultsByQueryIdsAsync(queryIds);
         var notifications = await flightQueryNotificationRepository.GetPriceDropNotificationsByQueryIdsAsync(queryIds);
-        var context = new PriceDropContext(queries, alarms, results, notifications);
+        var context = new PriceDropContext(queries, alerts, results, notifications);
 
         context.Queries.Each(x => DectectPriceDrop(x, context));
 
@@ -55,7 +56,7 @@ public class PriceDropAlarmTrigger(
         if (previousPrice.HasValue && bestPrice >= previousPrice.Value)
             return;
 
-        context.DroppedPrices.Add(new DroppedPrice(query, context.Alarms[query.Id], latestResult, previousNotification, bestPrice));
+        context.DroppedPrices.Add(new DroppedPrice(query, context.Alerts[query.Id], latestResult, previousNotification, bestPrice));
     }
 
     private async Task NotifyDroppedPrices(PriceDropContext context)
@@ -73,8 +74,8 @@ public class PriceDropAlarmTrigger(
     private async Task NotifyDroppedPrices(DroppedPrice droppedPrice)
     {
         var tasks = droppedPrice
-            .Alarms
-            .SelectMany(alarm => alarm.Targets)
+            .Alerts
+            .SelectMany(x => x.Targets)
             .Select(x => droppedPriceSenders[x.Type].NotifyDroppedPriceAsync(droppedPrice, x));
 
         await Task.WhenAll(tasks);

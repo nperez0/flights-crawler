@@ -14,11 +14,11 @@ public class DroppedPriceTelegramSender(
     IAirportRepository airportRepository) 
     : IDroppedPriceSender
 {
-    public AlarmTargetType Type => AlarmTargetType.Telegram;
+    public AlertTargetType Type => AlertTargetType.Telegram;
 
-    public async Task NotifyDroppedPriceAsync(DroppedPrice droppedPrice, AlarmTarget target)
+    public async Task NotifyDroppedPriceAsync(DroppedPrice droppedPrice, AlertTarget target)
     {
-        var telegramNotificator = (TelegramAlarmTarget)target;
+        var telegramNotificator = (TelegramAlertTarget)target;
         var airports = await airportRepository.GetAllAirportsAsync();
 
         await telegramBotClient.SendMessage(

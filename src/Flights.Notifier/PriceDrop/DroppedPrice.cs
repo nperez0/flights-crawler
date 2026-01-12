@@ -6,13 +6,13 @@ namespace Flights.Notifier.PriceDrop;
 
 public class DroppedPrice(
     FlightQuery query, 
-    FlightQueryAlarm[] alarms,
+    FlightQueryAlert[] alerts,
     FlightQueryResult bestResult, 
     FlightQueryPriceDropNotification? previousNotification, 
     double price)
 {
     public FlightQuery Query { get; } = query;
-    public FlightQueryAlarm[] Alarms { get; } = alarms;
+    public FlightQueryAlert[] Alerts { get; } = alerts;
     public FlightQueryResult BestResult { get; } = bestResult;
     public FlightQueryPriceDropNotification? PreviousNotification { get; } = previousNotification;
     public double Price { get; } = price;

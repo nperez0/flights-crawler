@@ -13,7 +13,7 @@ public static class Configuration
         
         services.AddScoped<IDroppedPriceSender, DroppedPriceTelegramSender>();
 
-        services.AddTransient<IAlarmTrigger, PriceDropAlarmTrigger>();
+        services.AddTransient<IAlertTrigger, PriceDropAlertTrigger>();
 
         return services;
     }

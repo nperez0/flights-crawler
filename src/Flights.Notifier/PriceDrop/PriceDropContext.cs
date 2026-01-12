@@ -6,13 +6,13 @@ namespace Flights.Notifier.PriceDrop;
 
 public class PriceDropContext(
     FlightQuery[] queries, 
-    FlightQueryPriceDropAlarm[] alarms, 
+    FlightQueryPriceDropAlert[] alerts, 
     FlightQueryResult[] results, 
     FlightQueryPriceDropNotification[] notifications)
 {
     public FlightQuery[] Queries { get; } = queries;
 
-    public Dictionary<Guid, FlightQueryPriceDropAlarm[]> Alarms { get; } = alarms
+    public Dictionary<Guid, FlightQueryPriceDropAlert[]> Alerts { get; } = alerts
         .GroupBy(x => x.QueryId)
         .ToDictionary(x => x.Key, g => g.ToArray());
 

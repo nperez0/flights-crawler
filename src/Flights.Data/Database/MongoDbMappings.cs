@@ -19,12 +19,12 @@ public static class MongoDbMappings
         ConfigureFlightSolution();
         ConfigureFlightSlice();
         ConfigureResultLocation();
-        ConfigureFlightQueryAlarm();
-        ConfigureFlightQueryPriceDropAlarm();
+        ConfigureFlightQueryAlert();
+        ConfigureFlightQueryPriceDropAlert();
         ConfigureFlightQueryNotification();
         ConfigureFlightQueryPriceDropNotification();
-        ConfigureAlarmTarget();
-        ConfigureTelegramAlarmTarget();
+        ConfigureAlertTarget();
+        ConfigureTelegramAlertTarget();
         ConfigureAirport();
     }
 
@@ -156,13 +156,13 @@ public static class MongoDbMappings
         });
     }
 
-    private static void ConfigureFlightQueryAlarm()
+    private static void ConfigureFlightQueryAlert()
     {
-        BsonClassMap.RegisterClassMap<FlightQueryAlarm>(cm =>
+        BsonClassMap.RegisterClassMap<FlightQueryAlert>(cm =>
         {
             cm.AutoMap();
             cm.SetIsRootClass(true);
-            cm.SetDiscriminator("alarm");
+            cm.SetDiscriminator("alert");
             cm.MapIdProperty(x => x.Id)
                 .SetSerializer(new GuidSerializer(BsonType.String));
             cm.MapProperty(x => x.QueryId)
@@ -171,9 +171,9 @@ public static class MongoDbMappings
         });
     }
 
-    private static void ConfigureFlightQueryPriceDropAlarm()
+    private static void ConfigureFlightQueryPriceDropAlert()
     {
-        BsonClassMap.RegisterClassMap<FlightQueryPriceDropAlarm>(cm =>
+        BsonClassMap.RegisterClassMap<FlightQueryPriceDropAlert>(cm =>
         {
             cm.AutoMap();
             cm.SetDiscriminator("priceDrop");
@@ -229,16 +229,16 @@ public static class MongoDbMappings
         });
     }
 
-    private static void ConfigureAlarmTarget()
+    private static void ConfigureAlertTarget()
     {
-        BsonClassMap.RegisterClassMap<AlarmTarget>(cm =>
+        BsonClassMap.RegisterClassMap<AlertTarget>(cm =>
         {
             cm.AutoMap();
             cm.SetDiscriminator("target");
         });
     }
 
-    private static void ConfigureTelegramAlarmTarget()
+    private static void ConfigureTelegramAlertTarget()
     {
         BsonClassMap.RegisterClassMap<TelegramAlarmTarget>(cm =>
         {
