@@ -17,4 +17,7 @@
   <Folder Name="/Notifications/">
     <Project Path="Flights.Notifier.Job/Flights.Notifier.Job.csproj" />
   </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
 </Solution>
