@@ -43,6 +43,9 @@ public static class MongoDbMappings
                 .SetElementName("disabled");
             cm.MapProperty(x => x.Segments)
                 .SetElementName("segments");
+            cm.MapProperty(x => x.Stops)
+                .SetElementName("stops")
+                .SetSerializer(new EnumSerializer<Stops>(BsonType.String));
         });
     }
 

@@ -89,6 +89,17 @@ public static class FormActions
         await selRemoveCity.Select(currentSegment + 1).ClickAsync();
     }
 
+    public static async Task SelectStopsAsync(this IPage page, Stops stops)
+    {
+        var selStops = page.Locator("mat-select[formcontrolname=\"stops\"]");
+        var selStopsOption = page.Locator($"mat-option:has-text('{GetOptionName(stops)}')");
+
+        await selStops.ClickAsync();
+
+        await selStopsOption.WaitForAsync(new LocatorWaitForOptions { State = WaitForSelectorState.Visible });
+        await selStopsOption.ClickAsync();
+    }
+
     public static async Task SelectCurrencyAsync(this IPage page, string currency)
     {
         var selCurrency = page.Locator("input[formcontrolname=\"currency\"]");
@@ -120,5 +131,14 @@ public static class FormActions
         FlightQueryDays.PlusMinusOneDay => "+/- 1 day",
         FlightQueryDays.PlusMinusTwoDays => "+/- 2 days",
         _ => throw new ArgumentOutOfRangeException(nameof(searchDays), searchDays, null)
+    };
+
+    private static string GetOptionName(Stops stops) => stops switch
+    {
+        Stops.NoLimit => "No limit",
+        Stops.Direct => "Nonstop only",
+        Stops.One => "Up to 1 stop",
+        Stops.Two => "Up to 2 stops",
+        _ => throw new ArgumentOutOfRangeException(nameof(stops), stops, null)
     };
 }

@@ -17,14 +17,7 @@ public class ItaFlightsCrawler(
 
     public async Task<FlightQueryResult[]> ExecuteQueriesAsync(FlightQuery[] flightQueries)
     {
-        var results = new List<FlightQueryResult>();
-
-        foreach (var flightQuery in flightQueries)
-        {
-            var result = await ExecuteQuery(flightQuery);
-
-            results.Add(result);
-        }
+        var results = await flightQueries.SelectAsync(ExecuteQuery);
 
         return [.. results.Where(x => x != FlightQueryResult.Empty)];
     }

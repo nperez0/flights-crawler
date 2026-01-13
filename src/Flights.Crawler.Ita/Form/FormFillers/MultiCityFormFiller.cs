@@ -23,6 +23,7 @@ public class MultiCityFormFiller(IPage page, FlightQuery query) : IFormFiller
                 await page.AddFlightAsync(i);
         }
 
+        await page.SelectStopsAsync(query.Stops);
         await page.SelectCurrencyAsync("EUR");
     }
 }

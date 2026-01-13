@@ -6,4 +6,5 @@ public class FlightQuery
     public FlightQueryType Type { get; set; }
     public bool Disabled { get; set; }
     public required FlightQuerySegment[] Segments { get; set; }
+    public Stops Stops { get; set; }
 }

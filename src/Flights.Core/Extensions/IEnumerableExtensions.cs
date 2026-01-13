@@ -7,4 +7,14 @@ public static class IEnumerableExtensions
         foreach (var item in source)
             action(item);
     }
+
+    public static async Task<IEnumerable<TResult>> SelectAsync<T, TResult>(this IEnumerable<T> source, Func<T, Task<TResult>> action)
+    {
+        var results = new List<TResult>();
+
+        foreach (var item in source)
+            results.Add(await action(item));
+
+        return results;
+    }
 }
